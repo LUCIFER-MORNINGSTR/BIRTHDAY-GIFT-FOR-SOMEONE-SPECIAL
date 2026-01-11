@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday MAMTA 🎀</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Segoe UI,sans-serif}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#ffb6c1,#ffd1dc);
+display:flex;
+justify-content:center;
+align-items:center;
+overflow-x:hidden;
+transition:1s;
+}
+
+.page{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;transition:1s}
+.hidden{opacity:0;pointer-events:none}
+
+.card{
+background:#fff;
+max-width:900px;width:92%;
+border-radius:30px;
+padding:45px 30px;
+box-shadow:0 25px 60px rgba(0,0,0,.15);
+text-align:center;
+}
+
+h1{font-size:2.4rem;color:#ff4f81}
+h2{font-size:1.3rem;margin:15px 0 25px;color:#555}
+
+.name{
+background:linear-gradient(90deg,#ff4f81,#ff85a2,#ff4f81);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+font-weight:800;
+}
+
+.magic-btn{
+padding:16px 42px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#ff4f81,#ff85a2);
+color:#fff;
+font-size:1.05rem;
+cursor:pointer;
+box-shadow:0 15px 35px rgba(255,79,129,.45);
+}
+
+.page2{
+flex-direction:column;
+text-align:center;
+padding-bottom:40px;
+width:100%;
+}
+
+.photo{
+width:220px;height:220px;
+border-radius:50%;
+border:6px solid #fff;
+object-fit:cover;
+box-shadow:0 15px 30px rgba(0,0,0,.2);
+margin-bottom:10px;
+}
+
+.soft-text{color:#666;margin-bottom:10px}
+
+.games{
+margin-top:25px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+width:94%;
+max-width:1200px;
+}
+
+/* ✅ SECTION BORDER FIX */
+.game{
+background:transparent;
+border:2px solid rgba(255,79,129,0.6);
+border-radius:22px;
+padding:18px;
+}
+
+.game h3{color:#ff4f81;margin-bottom:10px}
+
+.game button{
+padding:8px 16px;
+border-radius:20px;
+border:none;
+background:#ff85a2;
+color:#fff;
+cursor:pointer;
+margin-top:8px;
+}
+
+.cake{font-size:70px;cursor:pointer;margin:5px}
+
+.hidden-msg{display:none;color:#ff4f81;font-weight:600}
+
+.mood span{font-size:28px;cursor:pointer;margin:4px}
+
+/* floating hearts */
+.float{
+position:fixed;
+top:-50px;
+font-size:28px;
+animation:fall linear forwards;
+pointer-events:none;
+z-index:999;
+}
+@keyframes fall{to{transform:translateY(120vh) rotate(720deg)}}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+<div class="card">
+<h1>Happy Birthday <span class="name">MAMTA 🎀</span></h1>
+<h2>A little pink world made just for you 💕</h2>
+<button class="magic-btn" onclick="enterPage()">Enter Your Surprise ✨</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page page2 hidden" id="page2">
+
+<audio id="music" loop>
+<source src="perfect-instrumental.mp3" type="audio/mpeg">
+</audio>
+
+<img src="https://via.placeholder.com/400" class="photo">
+<h1>🌸 Hey <span class="name">MANNU</span> 🌸</h1>
+<p class="soft-text" id="timer">You’ve been smiling here for 0 seconds ⏳</p>
+
+<div class="games">
+
+<div class="game">
+<h3>🎂 BLOW THE CANDLES</h3>
+<div>
+<span class="cake" onclick="blowClick(this)">🎂</span>
+<span class="cake" onclick="blowClick(this)">🧁</span>
+<span class="cake" onclick="blowClick(this)">🍰</span>
+<span class="cake" onclick="blowClick(this)">🍮</span>
+<!--below 1 line added-->
+</div>
+<button onclick="resetBlowGame()">Reset</button>
+<button onclick="startMic()">🎤 Blow using mic</button>
+<p>Make a wish ✨</p>
+</div>
+
+<div class="game">
+<h3>💖 CATCH THE HEARTS</h3>
+<button onclick="startHeartGame()">Start</button>
+<p>Score: <span id="score">0</span></p>
+</div>
+
+
+<!-- ✅ Quiz Section -->
+<div class="game">
+<h3>🧩 CUTE QUIZ</h3>
+<p id="quizQuestion"></p>
+<div id="quizOptions"></div>
+<p id="quizAnswer" style="margin-top:8px;font-weight:600;"></p>
+</div>
+
+<div class="game">
+<h3>🎨 PICK YOUR MOOD </h3>
+<div class="mood">
+<span onclick="setMood(0)">💖</span>
+<span onclick="setMood(1)">🌈</span>
+<span onclick="setMood(2)">🌸</span>
+<span onclick="setMood(3)">✨</span>
+<span onclick="setMood(4)">🌺</span>
+<span onclick="setMood(5)">🌞</span>
+<span onclick="setMood(6)">🌙</span>
+<span onclick="setMood(7)">🔥</span>
+<span onclick="setMood(8)">🌊</span>
+<span onclick="setMood(9)">🌳</span>
+<span onclick="setMood(10)">❄️</span>
+<span onclick="setMood(11)">🌻</span>
+<span onclick="setMood(12)">🌟</span>
+<span onclick="setMood(13)">🍀</span>
+<span onclick="setMood(14)">💎</span>
+<span onclick="setMood(15)">🍂</span>
+<span onclick="setMood(16)">🎵</span>
+<span onclick="setMood(17)">🌌</span>
+<span onclick="setMood(18)">🎀</span>
+<span onclick="setMood(19)">🌹</span>
+<span onclick="setMood(20)">🦋</span>
+<span onclick="setMood(21)">🍓</span>
+<span onclick="setMood(22)">🍁</span>
+<span onclick="setMood(23)">⚡</span>
+<span onclick="setMood(24)">🎉</span>
+<span onclick="setMood(25)">💫</span>
+<span onclick="setMood(26)">🍄</span>
+<span onclick="setMood(27)">🍌</span>
+<span onclick="setMood(28)">🎈</span>
+<span onclick="setMood(29)">🌷</span>
+<span onclick="setMood(30)">🍍</span>
+<span onclick="setMood(31)">🪁</span>
+<span onclick="setMood(32)">🌼</span>
+</div>
+</div>
+
+<div class="game">
+<h3>🔐 SECRET NOTE <h5>This Note Will Show Only After The Scoreing 5 in Catch the Heat Game.</h5></h3>
+
+<p class="hidden-msg" id="hiddenMsg">You are precious, loved & admired 💝</p>
+</div>
+
+<div class="game">
+<h3>💌 Compliment</h3>
+<button onclick="compliment()">Tap</button>
+<p id="comp"></p>
+</div>
+
+<div class="game">
+<h3>🎁 Gift Shower</h3>
+<p>🎁💍🧸👗💄💎🌸🎀</p>
+</div>
+
+
+<div class="game">
+<h3>🎆 Fireworks</h3>
+<button onclick="floatLoop()">Celebrate 🎉</button>
+</div>
+
+<div class="game">
+<h3>💬 Birthday Wishes</h3>
+<p>May your life be filled with love & happiness 💖</p>
+</div>
+
+<div class="game">
+<h3>📸 Memories</h3>
+<p>Every moment with you is special ✨</p>
+</div>
+
+<div class="game">
+<h3>🎵 Music Control</h3>
+<button onclick="music.pause()">Pause</button>
+<button onclick="music.play()">Play</button>
+</div>
+
+<div class="game">
+<h3>💝 Love Note</h3>
+<p>You are the reason smiles exist 🌸</p>
+</div>
+
+</div>
+
+<p class="soft-text" style="margin-top:25px"><B>— From GAURAV 💝</B></p>
+</div>
+
+<script>
+let startTime,score=0,gamesPlayed=0,quizIndex=0;
+
+const quizData = [
+{q:"Who is the birthday girl?", o:["Mamta","Someone else","Nobody","Everyone"], a:0},
+{q:"Mamta is best known for?", o:["Smile","Kindness","Care","All"], a:3},
+{q:"Mamta deserves?", o:["Love","Happiness","Success","All"], a:3},
+{q:"Mamta’s nature is?", o:["Sweet","Soft","Lovely","All"], a:3},
+{q:"Mamta spreads?", o:["Joy","Positivity","Smiles","All"], a:3},
+{q:"Mamta is like a?", o:["Star","Angel","Princess","All"], a:3},
+{q:"Mamta makes people feel?", o:["Happy","Safe","Loved","All"], a:3},
+{q:"Mamta’s heart is?", o:["Pure","Kind","Golden","All"], a:3},
+{q:"Mamta brings?", o:["Smiles","Peace","Warmth","All"], a:3},
+{q:"Mamta is?", o:["Special","Unique","Amazing","All"], a:3}
+];
+
+function loadQuiz(){
+const q = quizData[quizIndex];
+document.getElementById("quizQuestion").innerText = q.q;
+document.getElementById("quizOptions").innerHTML = "";
+document.getElementById("quizAnswer").innerText = "";
+q.o.forEach((opt,i)=>{
+let btn = document.createElement("button");
+btn.className = "quiz-option";
+btn.innerText = opt;
+btn.onclick = ()=>checkAnswer(i);
+document.getElementById("quizOptions").appendChild(btn);
+});
+}
+
+
+function checkAnswer(i){
+    const correct = quizData[quizIndex].a;
+
+    // Funny responses
+    const funnyCorrect = [
+        "💥 Boom! Nailed it! 😎",
+        "🎉 You smarty pants! 🤓",
+        "✨ Genius move! 🌟",
+        "👏 Woohoo! You got it! 😄",
+        "🍀 Lucky guess… or pure skill? 😏"
+    ];
+    const funnyIncorrect = [
+        "😅 Oops! Better luck next time!",
+        "🙈 Haha, not quite!",
+        "😂 Close, but nope!",
+        "😜 Wrong answer, but you tried!",
+        "🤷‍♂️ Maybe next time!"
+    ];
+
+    // Show funny message
+    document.getElementById("quizAnswer").innerText =
+        i===correct ? funnyCorrect[Math.floor(Math.random()*funnyCorrect.length)] 
+                    : funnyIncorrect[Math.floor(Math.random()*funnyIncorrect.length)] + 
+                      " Correct: " + quizData[quizIndex].o[correct];
+
+    // Automatically move to next question after 1.5 seconds
+    setTimeout(() => {
+        nextQuestion();
+    }, 2000);
+}
+
+
+
+
+function nextQuestion(){
+quizIndex = (quizIndex + 1) % quizData.length;
+loadQuiz();
+}
+
+function enterPage(){
+page1.classList.add('hidden');
+page2.classList.remove('hidden');
+music.play();
+startTime=Date.now();
+setInterval(()=>timer.innerText=
+`You’ve been smiling here for ${Math.floor((Date.now()-startTime)/1000)} seconds ⏳`,1000);
+floatLoop();
+loadQuiz();
+}
+
+function floatLoop(){
+setInterval(()=>{
+let e=document.createElement('div');
+e.className='float';
+e.innerText=Math.random()>0.5?'💖':'🌸';
+e.style.left=Math.random()*100+'vw';
+e.style.animationDuration=4+Math.random()*4+'s';
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),8000);
+},900);
+}
+
+function blowClick(el){
+if(el.innerText!=='💝'){el.innerText='💝';gamesPlayed++;checkUnlock();}
+}
+
+function startMic(){navigator.mediaDevices.getUserMedia({audio:true});}
+
+function startHeartGame(){
+score=0;
+document.getElementById('score').innerText='Score: 0';
+for(let i=0;i<10;i++){
+let heart=document.createElement('div');
+heart.innerText='💖';
+heart.style.position='fixed';
+heart.style.left=Math.random()*90+'vw';
+heart.style.top=Math.random()*80+'vh';
+heart.style.fontSize='40px';
+heart.style.cursor='pointer';
+document.body.appendChild(heart);
+heart.onclick=()=>{
+score++;
+document.getElementById('score').innerText='Score: '+score;
+heart.remove();
+gamesPlayed++;
+checkUnlock();
+};
+setTimeout(()=>heart.remove(),3000);
+}
+}
+
+// added function
+document.querySelectorAll('.game')[1].querySelector('button').innerText = 'Start';
+//document.querySelector('.game button').innerText = 'Start'; // instead of "Start"
+function checkUnlock(){
+    if(gamesPlayed >= 1){
+        hiddenMsg.style.display = 'block';
+        document.querySelector('.game button').innerText = 'START'; // <-- this line changes the button text
+    }
+}
+
+
+function checkUnlock(){ 
+    if(score >= 5){ 
+        hiddenMsg.style.display = 'block'; 
+        //hiddenMsg.innerText = "🎉 Congratulations! You reached 5 points! 💝 ";
+        hiddenMsg.innerHTML = '<span style="color:#ff4f81; font-weight:bold; font-size:18px;">🎉 Congratulations!</span><br><span style="color:#ff85a2; font-size:16px;">You reached 5 points! 💝</span></span><br><span style="color:#8B0000; font-size:16px;">MY MESSAGE THAT I WANT TO WRITE. 💝</span>';
+        
+        hiddenMsg.style.display = 'block';
+        setTimeout(() => { hiddenMsg.style.display = 'none'; }, 5000); // hides after 3 seconds
+
+    } else { 
+        hiddenMsg.style.display = 'none'; 
+    }
+}
+
+
+// added upper
+
+<!--function checkUnlock(){if(gamesPlayed>=1){hiddenMsg.style.display='block'; hiddenMsg.style.fontSize='24px'; hiddenMsg.style.fontWeight='700'; hiddenMsg.style.color='#ff1493';}}-->
+
+function setMood(i){
+    let m=[
+        ['#ffb6c1','#ffd1dc'],['#a1c4fd','#c2e9fb'],['#fbc2eb','#a6c1ee'],['#fff1eb','#ace0f9'],
+        ['#ffecd2','#fcb69f'],['#f9d29d','#ffc3a0'],['#c1dfc4','#d4fc79'],['#ffdde1','#ee9ca7'],
+        ['#e0c3fc','#8ec5fc'],['#f093fb','#f5576c'],['#4facfe','#00f2fe'],['#43e97b','#38f9d7'],
+        ['#fa709a','#fee140'],['#ffefba','#ffffff'],['#00c6ff','#0072ff'],['#fdfbfb','#ebedee'],
+        ['#fbc2eb','#a6c1ee'],['#f6d365','#fda085'],['#ff9a9e','#fad0c4'],['#a1c4fd','#c2e9fb'],
+        ['#d4fc79','#96e6a1'],['#84fab0','#8fd3f4'],['#cfd9df','#e2ebf0'],['#e0eafc','#cfdef3'],
+        ['#f093fb','#f5576c'],['#43e97b','#38f9d7'],['#fa709a','#fee140'],['#ffefba','#ffffff'],
+        ['#f6d365','#fda085'],['#ff9a9e','#fad0c4'],['#c1dfc4','#d4fc79'],['#4facfe','#00f2fe']
+    ];
+    document.body.style.transition = "background 1s"; // smooth transition
+    document.body.style.background = `linear-gradient(135deg, ${m[i][0]}, ${m[i][1]})`;
+}
+
+
+function compliment(){
+let c=[
+'You are magical ✨','Your smile is everything 💖','You shine 🌸','You are loved 💝',
+'You are amazing 🌟','Keep glowing 💫','You are the best 💕','Your happiness matters 💝',
+'Your energy is infectious 🌸','You are a superstar 💖','You make life brighter ✨',
+'You are brilliant 💎','Your kindness inspires 💕','You light up the room 🌈',
+'You are wonderful 🌹','You are unique 💫','You spread joy 🎉','Your laughter is precious 😄',
+'You are beautiful inside & out 🌸','You are unstoppable 💪'
+];
+comp.innerText=c[Math.floor(Math.random()*c.length)];
+}
+
+
+// adding reset cake
+function resetBlowGame() {
+    const original = ['🎂','🧁','🍰','🍮'];
+    document.querySelectorAll('.game:nth-child(1) .cake').forEach((el,i)=>{
+        el.innerText = original[i];
+    });
+    gamesPlayed = 0; // optional, if you want hidden note logic to reset
+}
+
+// close reset cake
+
+
+</script>
+
+</body>
+</html>
