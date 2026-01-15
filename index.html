@@ -170,7 +170,21 @@
     text-align: center;
     overflow: hidden;
 }
-    
+
+/* #fullScreenOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: none; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: slowFadeIn 2.5s ease-in-out; 
+} */
 #fullScreenOverlay {
     position: fixed;
     top: 0;
@@ -194,6 +208,16 @@
     to { opacity: 1; }
 }
 
+
+/* #fullScreenOverlay img {
+    max-width: 90%;
+    max-height: 70%;
+    border: 5px solid white;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+    animation: slowZoom 3s ease-in-out;
+} */
 #fullScreenOverlay img {
     max-width: 95%;
     max-height: 55vh; /* Limits image height to 55% of the screen height */
@@ -582,11 +606,16 @@ z-index:999;
 
 </div>
 </div>
-
-<div class="game">
+<!--part of ------------------------------->
+<!-- <div class="game">
 <h3>🔐 SECRET NOTE <h5>This Note Will Show Only After The Scoreing 5 in Catch the Heat Game.</h5></h3>
 
 <p class="hidden-msg" id="hiddenMsg">You are precious, loved & admired 💝</p>
+</div> -->
+<div class="game">
+  <h3>🔐 SECRET NOTE</h3>
+  <h5>This Note Will Show Only After The Scoreing 5 in Catch the Heat Game.</h5>
+  <p class="hidden-msg" id="hiddenMsg">You are precious, loved & admired 💝</p>
 </div>
 
 <div class="game">
@@ -911,6 +940,18 @@ function startFlowerShower() {
     }
 }
 
+
+
+// function enterPage(){
+// page1.classList.add('hidden');
+// page2.classList.remove('hidden');
+// music.play();
+// startTime=Date.now();
+// setInterval(()=>timer.innerText=
+// `You’ve been smiling here for ${Math.floor((Date.now()-startTime)/1000)} seconds ⏳`,1000);
+// floatLoop();
+// loadQuiz();
+// }
 function enterPage(){
     page1.classList.add('hidden');
     page2.classList.remove('hidden');
@@ -965,19 +1006,44 @@ setTimeout(()=>heart.remove(),3000);
 // added function
 document.querySelectorAll('.game')[1].querySelector('button').innerText = 'Start';
 
+// function checkUnlock() {
+//     const msgBox = document.getElementById('hiddenMsg');
+//     if (score >= 5) {
+//         msgBox.style.display = 'block';
+//         msgBox.innerHTML = `
+//             <div style="text-align:center;">
+//                 <span style="font-size:18px;">🎉 Score: ${score}!</span><br>
+//                 <p style="color:#8B0000; margin-top:10px;">
+//                    ${"WRITE YOUR VERY LONG MESSAGE HERE... ".repeat(10)} 
+//                 </p>
+//             </div>`;
+//     } else {
+//         msgBox.style.display = 'none';
+//     }
+// }
+//after the message disappear----------------------------
 function checkUnlock() {
     const msgBox = document.getElementById('hiddenMsg');
+    // Find the instruction text (h5) inside the secret note game box
+    const instructionNote = msgBox.parentElement.querySelector('h5');
+
     if (score >= 5) {
+        // Hide the instruction note
+        if (instructionNote) instructionNote.style.display = 'none';
+        
+        // Show the message box
         msgBox.style.display = 'block';
         msgBox.innerHTML = `
-            <div style="text-align:center;">
-                <span style="font-size:18px;">🎉 Score: ${score}!</span><br>
-                <p style="color:#8B0000; margin-top:10px;">
-                   ${"WRITE YOUR VERY LONG MESSAGE HERE... ".repeat(10)} 
-                </p>
-            </div>`;
+        <div style="text-align:center;">
+            <span style="font-size:18px;">🎉 Score: ${score}!</span><br>
+            <p style="color:#8B0000; margin-top:10px;">
+                You are precious, loved & admired 💝
+            </p>
+        </div>`;
     } else {
         msgBox.style.display = 'none';
+        // Show the note again if the game is reset and score is less than 5
+        if (instructionNote) instructionNote.style.display = 'block';
     }
 }
 
@@ -1013,6 +1079,20 @@ comp.innerText=c[Math.floor(Math.random()*c.length)];
 
 
 let isBlowing = false; 
+// function blowClick(el) {
+//     if (el.innerText !== '💝') {
+//         el.style.opacity = '0.3';
+//         el.style.transform = 'scale(0.5)';
+        
+//         setTimeout(() => {
+//             el.innerText = '💝';
+//             el.style.opacity = '1';
+//             el.style.transform = 'scale(1)';
+//             gamesPlayed++;
+//             checkUnlock();
+//         }, 600); // The delay that makes it feel "slow"
+//     }
+// }
 function blowClick(el) {
     if (el.innerText !== '💝') {
         // Trigger Explosion at the cake's position
@@ -1031,7 +1111,36 @@ function blowClick(el) {
     }
 }
 
+// function startMic() {
+//     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+//         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+//         const analyser = audioContext.createAnalyser();
+//         const microphone = audioContext.createMediaStreamSource(stream);
+//         const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
 
+//         analyser.fftSize = 512;
+//         microphone.connect(analyser);
+//         analyser.connect(scriptProcessor);
+//         scriptProcessor.connect(audioContext.destination);
+
+//         scriptProcessor.onaudioprocess = () => {
+//             const array = new Uint8Array(analyser.frequencyBinCount);
+//             analyser.getByteFrequencyData(array);
+//             let values = 0;
+//             for (let i = 0; i < array.length; i++) values += array[i];
+//             let average = values / array.length;
+
+//             if (average > 40 && !isBlowing) { 
+//                 const cakes = Array.from(document.querySelectorAll('.cake')).filter(c => c.innerText !== '💝');
+//                 if (cakes.length > 0) {
+//                     isBlowing = true; 
+//                     blowClick(cakes[0]); 
+//                     setTimeout(() => { isBlowing = false; }, 1000); 
+//                 }
+//             }
+//         };
+//     }).catch(err => alert("Mic access required to blow candles!"));
+// }
 function startMic() {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -1072,20 +1181,212 @@ function resetBlowGame() {
     score = 0;
     gamesPlayed = 0;
 }
-    
+
+
+// function openGiftPage(){
+//   page2.classList.add('hidden');S
+//   page3.classList.remove('hidden');
+// }
 function openGiftPage() {
     document.getElementById('page2').classList.add('hidden');
     document.getElementById('page3').classList.remove('hidden');
+    
+    // Add this line to scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// function backToGames(){
+//   page3.classList.add('hidden');
+//   page2.classList.remove('hidden');
+// }
 function backToGames() {
     document.getElementById('page3').classList.add('hidden');
     document.getElementById('page2').classList.remove('hidden');
+    
+    // Add this line to scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+
+// function startFireworksWithText() {
+//     const existingCanvas = document.getElementById('fireworkCanvas');
+//     const fromGauravLine = document.querySelector('p.soft-text b');
+//     const fromGauravRect = fromGauravLine.getBoundingClientRect();
+//     const startY = fromGauravRect.top + fromGauravRect.height / 2;
+
+
+//     if (existingCanvas) existingCanvas.remove(); 
+
+//     const canvas = document.createElement('canvas');
+//     canvas.id = 'fireworkCanvas';
+//     document.getElementById('page2').appendChild(canvas);
+//     canvas.style.position = 'fixed';
+//     canvas.style.left = '0';
+//     canvas.style.top = '0';
+//     canvas.style.pointerEvents = 'none';
+
+//     const ctx = canvas.getContext('2d');
+
+//     canvas.width = window.innerWidth;
+//     canvas.height = window.innerHeight;
+
+//     let fireworks = [];
+//     let particles = [];
+
+//     class Firework {
+//         constructor(x, y, tx, ty) {
+//             this.x = x; this.y = y;
+//             this.tx = tx; this.ty = ty;
+//             this.distanceToTarget = Math.hypot(tx - x, ty - y);
+//             this.speed = 4;
+//             this.acceleration = 1.05;
+//             this.brightness = Math.random() * 50 + 50;
+//             this.coordinates = [[x, y]];
+//             this.angle = Math.atan2(ty - y, tx - x);
+//         }
+//         update(index) {
+//             this.coordinates.push([this.x, this.y]);
+//             if (this.coordinates.length > 3) this.coordinates.shift();
+
+//             this.speed *= this.acceleration;
+//             const vx = Math.cos(this.angle) * this.speed;
+//             const vy = Math.sin(this.angle) * this.speed;
+//             this.x += vx;
+//             this.y += vy;
+
+//             if (Math.hypot(this.tx - this.x, this.ty - this.y) < 5) {
+//                 createParticles(this.tx, this.ty);
+//                 fireworks.splice(index, 1);
+//             }
+//         }
+//         draw() {
+//             ctx.beginPath();
+//             ctx.moveTo(this.coordinates[0][0], this.coordinates[0][1]);
+//             ctx.lineTo(this.x, this.y);
+//             ctx.strokeStyle = `hsl(${Math.random()*360},100%,${this.brightness}%)`;
+//             ctx.stroke();
+//         }
+//     }
+
+//     class Particle {
+//         constructor(x, y) {
+//             this.x = x; this.y = y;
+//             this.coordinates = [[x, y]];
+//             this.angle = Math.random() * 2 * Math.PI;
+//             this.speed = Math.random() * 5 + 2;
+//             this.friction = 0.95;
+//             this.gravity = 0.7;
+//             this.hue = Math.random() * 360;
+//             this.brightness = Math.random() * 50 + 50;
+//             this.alpha = 1;
+//             this.decay = Math.random() * 0.03 + 0.015;
+//         }
+//         update(index) {
+//             this.coordinates.push([this.x, this.y]);
+//             if (this.coordinates.length > 5) this.coordinates.shift();
+
+//             this.speed *= this.friction;
+//             this.x += Math.cos(this.angle) * this.speed;
+//             this.y += Math.sin(this.angle) * this.speed + this.gravity;
+//             this.alpha -= this.decay;
+
+//             if (this.alpha <= 0.05) particles.splice(index, 1);
+//         }
+//         draw() {
+//             ctx.beginPath();
+//             ctx.moveTo(this.coordinates[0][0], this.coordinates[0][1]);
+//             ctx.lineTo(this.x, this.y);
+//             ctx.strokeStyle = `hsla(${this.hue},100%,${this.brightness}%,${this.alpha})`;
+//             ctx.stroke();
+//         }
+//     }
+
+//     function createParticles(x, y) {
+//         for (let i = 0; i < 30; i++) particles.push(new Particle(x, y));
+//     }
+
+//     function animate() {
+//         requestAnimationFrame(animate);
+//         ctx.globalCompositeOperation = 'destination-out';
+//         ctx.fillStyle = 'rgba(0,0,0,0.2)';
+//         ctx.fillRect(0, 0, canvas.width, canvas.height);
+//         ctx.globalCompositeOperation = 'lighter';
+
+//         fireworks.forEach((f, i) => { f.update(i); f.draw(); });
+//         particles.forEach((p, i) => { p.update(i); p.draw(); });
+//     }
+
+//     // animate();
+//     // --- DRAW THE TEXT EVERY FRAME FOR 10 SECONDS ---
+//     const text = "HAPPY BIRTHDAY MAMTA";
+//     const textStart = Date.now();
+
+//     function drawText() {
+//         const elapsed = Date.now() - textStart;
+        
+//         // Only start drawing after 1000ms (1 second)
+//         if (elapsed > 1000 && elapsed < 10000) { 
+//             const fadeDuration = 6000; 
+//             // Calculate alpha: 0 at 1s, 1 at 3s
+//             let alpha = Math.min((elapsed - 1000) / fadeDuration, 1);
+            
+//             let fontSize = window.innerWidth < 600 ? "40px" : "80px";
+//             ctx.font = `bold ${fontSize} Poppins, Arial`;
+//             // ctx.font = "bold 90px Poppins, Arial";
+//             ctx.textAlign = "center";
+//             ctx.textBaseline = "middle";
+            
+//             // Using rgba to apply the alpha/transparency
+//             ctx.fillStyle = `rgba(179, 0, 0, ${alpha})`; 
+//             ctx.fillText(text, canvas.width / 2, canvas.height / 3);
+//         }
+        
+//         // Keep the animation loop going as long as we are under 10 seconds
+//         if (elapsed < 6000) {
+//             requestAnimationFrame(drawText);
+//         }
+//     }
+// drawText();
+//     // TEXT TO FIREWORKS: shift it upward by 100px
+//     const textY = canvas.height / 2 - 100; 
+
+//     ctx.font = "bold 100px Arial";
+//     ctx.textAlign = "center";
+//     ctx.fillStyle = "white";
+//     ctx.fillText("HAPPY BIRTHDAY MAMTA", canvas.width/2, textY);
+
+//     const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+//     setTimeout(() => {
+//     ctx.clearRect(0,0,canvas.width,canvas.height);
+//     }, 1000);
+
+//     ctx.clearRect(0,0,canvas.width,canvas.height);
+
+//     const pixels = [];
+//     for (let y = 0; y < canvas.height; y += 8) {
+//         for (let x = 0; x < canvas.width; x += 8) {
+//             const alpha = imageData.data[(y*canvas.width + x)*4 + 3];
+//             if(alpha > 128) pixels.push([x, y]);
+//         }
+//     }
+
+//     let count = 0;
+//     function launchTextFireworks() {
+//         if(count >= pixels.length) return;
+//         for(let i=0; i<5; i++){
+//             if(count >= pixels.length) break;
+//             const p = pixels[count];
+//             fireworks.push(new Firework(canvas.width/2, startY, p[0], p[1]));
+//             count++;
+//         }
+//         setTimeout(launchTextFireworks, 50);
+//     }
+
+//     launchTextFireworks();
+//     animate();
+// }
 function startFireworksWithText() {
+    // Shooting point: Bottom Center of the phone
     const startX = window.innerWidth / 2;
     const startY = window.innerHeight;
 
@@ -1117,6 +1418,10 @@ function createFirework(sx, sy, tx, ty) {
     }, 10);
 }
 
+// function openMemoriesPage(){
+//   page2.classList.add('hidden');
+//   page4.classList.remove('hidden');
+// }
 function openMemoriesPage() {
     document.getElementById('page2').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
@@ -1125,6 +1430,10 @@ function openMemoriesPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// function backToGamesFromMemories(){
+//   page4.classList.add('hidden');
+//   page2.classList.remove('hidden');
+// }
 function backToGamesFromMemories() {
     document.getElementById('page4').classList.add('hidden');
     document.getElementById('page2').classList.remove('hidden');
@@ -1146,6 +1455,7 @@ function initScratch() {
     const canvas = document.getElementById('scratchCanvas');
     const ctx = canvas.getContext('2d');
     
+    // Fill the canvas with a silver "scratchable" layer
     ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = '#C0C0C0'; 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1406,7 +1716,7 @@ function bigExplosion(event) {
         createParticle(x, y);
     }
     
-    
+    // 4. THE RESTART LOGIC: Reset everything to 0
     loveScore = 0; // Resets the internal math counter
     document.getElementById("loveCount").innerText = "Love Level: 0"; // Resets the screen text
 }
@@ -1539,6 +1849,15 @@ function openBottle() {
     document.getElementById('shakeStatus').innerText = "Message Received! ❤️";
     document.getElementById('shakeStatus').style.color = "#ffeb3b";
 }
+
+// function resetBottle() {
+//     shakeAmount = 0;
+//     document.getElementById('shakeBar').style.width = "0%";
+//     document.getElementById('magicBottle').style.display = 'block';
+//     document.getElementById('hiddenMessage').style.display = 'none';
+//     document.getElementById('shakeStatus').innerText = "Shake the bottle to open it!";
+//     document.getElementById('shakeStatus').style.color = "#fff";
+// }
 
 
 // --- BOTTLE TREASURE LOGIC ---
