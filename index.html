@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday MAMTA 🎀</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Segoe UI,sans-serif}
+/* Big Gift Box Animations */
+.box-shake {
+    display: inline-block;
+    animation: box-wiggle 0.5s infinite;
+}
+
+@keyframes box-wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(8deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-8deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.prize-reveal {
+    animation: prize-grow 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes prize-grow {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes burst {
+    from {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: translate(var(--tx), var(--ty)) scale(0.6);
+        opacity: 0;
+    }
+}
+
+@keyframes heartBurst {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    /* This uses random values set by JS to fly in different directions */
+    transform: translate(var(--tx), var(--ty)) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.correct-btn {
+    background: #43e97b !important; /* Vibrant Green */
+    color: white !important;
+    transition: background 0.3s ease;
+}
+
+.burst-heart {
+    position: fixed;
+    font-size: 150px; /* Your new larger size */
+    pointer-events: none;
+    z-index: 9999;
+    /* ADD THIS LINE BELOW to center the heart on its starting point */
+    transform: translate(-50%, -50%); 
+    animation: burst 5s ease-out forwards;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-8px, 5px) rotate(-1deg); }
+  40% { transform: translate(8px, -5px) rotate(1deg); }
+  60% { transform: translate(-8px, -5px) rotate(-1deg); }
+  80% { transform: translate(8px, 5px) rotate(1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.shake-screen {
+  /* Increased duration and changed to 'ease-in-out' for smoothness */
+  animation: shake 0.4s ease-in-out;
+  animation-iteration-count: 3; 
+}
+
+.victory-crown {
+  font-size: 60px;
+  display: block;
+  margin: 10px auto;
+  animation: trophyPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Image popup */
+#imgPopup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+#imgPopup img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:20px;
+  box-shadow:0 20px 50px rgba(255,255,255,0.3);
+}
+
+#imgPopup .close{
+  position:absolute;
+  top:20px;
+  right:30px;
+  font-size:40px;
+  color:white;
+  cursor:pointer;
+}
+
+
+#memoriesGallery img{
+  width:220px;
+  border-radius:18px;
+  border:4px solid #fff;
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+  transition:0.3s;
+}
+
+#memoriesGallery img:hover{
+  transform:scale(1.08);
+}
+
+#page3 img{
+  width:220px;
+  height:auto;
+  border-radius:18px;
+  border:4px solid #fff;
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+  display:block !important;
+  opacity:1 !important;
+  animation:none !important;
+}
+
+
+
+#futurePics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 50px; 
+}
+
+
+#quizAnswer {
+    height: 40px; 
+    margin-top: 40px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#quizQuestion {
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* #fullScreenOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: none; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: slowFadeIn 2.5s ease-in-out; 
+} */
+#fullScreenOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: none; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: slowFadeIn 2.5s ease-in-out; 
+}
+
+
+@keyframes slowFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+/* #fullScreenOverlay img {
+    max-width: 90%;
+    max-height: 70%;
+    border: 5px solid white;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+    animation: slowZoom 3s ease-in-out;
+} */
+#fullScreenOverlay img {
+    max-width: 95%;
+    max-height: 55vh; /* Limits image height to 55% of the screen height */
+    object-fit: contain; /* Ensures the image doesn't distort */
+    border: 4px solid white;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+    animation: slowZoom 3s ease-in-out;
+}
+
+@keyframes slowZoom {
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
+}
+
+/* #fullScreenOverlay h1 {
+    color: #ff4f81;
+    font-size: 3rem;
+    text-shadow: 0 0 20px rgba(255, 79, 129, 0.8);
+    font-family: 'Poppins', sans-serif;
+    animation: prize-grow 1s ease-out;
+} */
+#fullScreenOverlay h1 {
+    color: #ff4f81;
+    font-size: clamp(1.8rem, 8vw, 3rem); /* Responsive font: shrinks on mobile, grows on desktop */
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255, 79, 129, 0.8);
+    font-family: 'Poppins', sans-serif;
+    margin: 10px 0;
+    animation: prize-grow 1s ease-out;
+    line-height: 1.2;
+}
+#fullScreenOverlay p {
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    margin-top: 5px;
+}
+
+
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #ffb6c1;
+    overflow-x: hidden;
+    font-family: Poppins,Segoe UI,sans-serif;
+    background-attachment: fixed;
+    /* ADD THE LINE BELOW */
+    transition: background-color 0.8s ease-in-out !important;
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: transparent; 
+}
+
+.page{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;transition:1s}
+.hidden{opacity:0;pointer-events:none}
+
+.card{
+background:#fff;
+max-width:900px;width:92%;
+border-radius:30px;
+padding:45px 30px;
+box-shadow:0 25px 60px rgba(0,0,0,.15);
+text-align:center;
+}
+
+h1{font-size:2.4rem;color:#ff4f81}
+h2{font-size:1.3rem;margin:15px 0 25px;color:#555}
+
+.name{
+background:linear-gradient(90deg,#ff4f81,#ff85a2,#ff4f81);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+font-weight:800;
+}
+
+.magic-btn{
+padding:16px 42px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#ff4f81,#ff85a2);
+color:#fff;
+font-size:1.05rem;
+cursor:pointer;
+box-shadow:0 15px 35px rgba(255,79,129,.45);
+}
+
+
+.page2, .page3, .page4 {
+    margin-top: 0 !important;   
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+    text-align: center;
+    padding: 20px;   
+    width: 100%;
+    min-height: 100vh;
+}
+
+.photo {
+    width: fit-content;       
+    max-width: 260px;
+    height: auto;
+    border-radius: 20px;
+    border: 6px solid #fff;
+    display: block;
+    margin: 20px auto;   
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+
+.soft-text{color:#666;margin-bottom:10px}
+
+.games{
+margin-top:25px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+width:94%;
+max-width:1200px;
+}
+
+.game{
+background:transparent;
+border:2px solid rgba(255,79,129,0.6);
+border-radius:22px;
+padding:18px;
+}
+
+.game h3{color:#ff4f81;margin-bottom:10px}
+
+.game button{
+padding:8px 16px;
+border-radius:20px;
+border:none;
+background:#ff85a2;
+color:#fff;
+cursor:pointer;
+margin-top:8px;
+}
+
+.cake {
+  font-size: 70px;
+  cursor: pointer;
+  margin: 5px;
+  display: inline-block;
+  transition: all 0.8s ease; 
+}
+
+@keyframes flicker {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.cake:not(.blown) {
+  animation: flicker 1.5s infinite;
+}
+
+.hidden-msg{display:none;color:#ff4f81;font-weight:600}
+
+.mood span{font-size:28px;cursor:pointer;margin:4px}
+
+/* floating hearts */
+.float{
+position:fixed;
+top:-50px;
+font-size:28px;
+animation:fall linear forwards;
+pointer-events:none;
+z-index:999;
+}
+
+.flower-shower {
+    position: fixed;
+    top: -50px;
+    z-index: 9999;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(360deg); }
+}
+
+
+</style>
+</head>
+
+<body>
+<!-- PAGE 3 : GIFT PAGE -->
+<div id="fullScreenOverlay" onclick="resetFromImage()">
+    <img src="MAMTA/fulscreen.jpg" alt="Birthday Queen">
+    <h1>HAPPY BIRTHDAY MAMTA! 🎂</h1>
+    <p style="color: white; margin-top: 10px;">Click anywhere to play again ✨</p>
+</div>
+ <!-- PAGE 4 : MEMORIES PAGE -->
+<div class="page page4 hidden" id="page4">
+  <div class="card">
+    <h1>📸 Beautiful Memories 💖</h1>
+
+    <div id="memoriesGallery">
+      <img src="MEMORY/memory1.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory2.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory3.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory4.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory5.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory6.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory7.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory8.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory9.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/memory10.jpg" onclick="openPopup(this)">
+      <img src="MEMORY/LAST MEMORY.jpg" onclick="openPopup(this)">
+    </div>
+    <br>
+    <button class="magic-btn" onclick="backToGamesFromMemories()">⬅ Back</button>
+  </div>
+</div>
+
+
+<div class="page page3 hidden" id="page3">  
+  <div class="card">
+    <h1>🎀 Gifts for You, Mamta 💝</h1>
+
+    <div id="futurePics">
+      <img src="GIFT/gift1.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift2.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift3.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift4.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift5.jpg" onclick="openPopup(this)">
+
+    </div>
+
+    <br>
+    <button class="magic-btn" onclick="backToGames()">⬅ Back</button>
+  </div>
+</div>
+
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+<div class="card">
+<h1>Happy Birthday <span class="name">MAMTA 🎀</span></h1>
+<h2>A little pink world made just for you 💕</h2>
+<button class="magic-btn" onclick="enterPage()">Enter Your Surprise ✨</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page page2 hidden" id="page2">
+
+<audio id="music" loop>
+<source src="OTHERS/Happy Birthday Mamta.mp3" type="audio/mpeg">
+</audio>
+
+<img src="MAMTA/mamta.jpg" class="photo" alt="Birthday Girl Mamta">
+<h1>🌸 Hey <span class="name">MANNU</span> 🌸</h1>
+<p class="soft-text" id="timer">You’ve been smiling here for 0 seconds ⏳</p>
+
+<div class="games">
+
+<div class="game">
+<h3>🎂 BLOW THE CANDLES</h3>
+<div>
+<span class="cake" onclick="blowClick(this)">🎂</span>
+<span class="cake" onclick="blowClick(this)">🧁</span>
+<span class="cake" onclick="blowClick(this)">🍰</span>
+<span class="cake" onclick="blowClick(this)">🍮</span>
+<!--below 1 line added-->
+</div>
+<button onclick="resetBlowGame()">Reset</button>
+<button onclick="startMic()">🎤 Blow using mic</button>
+<p>Make a wish ✨</p>
+</div>
+
+<div class="game" style="padding: 20px;">
+  <h3>💖 CATCH THE HEARTS</h3>
+  <button onclick="startHeartGame()">Start</button>
+  <p><span id="score">0</span></p>
+
+  <hr style="border: 1px solid #ffb6c1; margin: 40px 0;">
+
+  <h3>🎁 MAGIC SCRATCH CARD</h3>
+  <div id="scratchContainer" style="position:relative; width:180px; height:180px; margin:0 auto; border:4px solid #ff85a2; border-radius:20px; overflow:hidden; touch-action: none;">
+    <div style="position:absolute; inset:0; background:#fff;">
+      <img id="scratchImage" src="photo1.jpg" style="width:100%; height:100%; object-fit:cover;">
+    </div>
+    <canvas id="scratchCanvas" width="180" height="180" style="position:absolute; inset:0; cursor:crosshair;"></canvas>
+  </div>
+  <button onclick="initScratch()" style="margin-top: 10px;">Reset Card</button>
+</div>
+
+<div class="game" style="min-height: 520px; display: flex; flex-direction: row; gap: 15px; align-items: stretch;">
+  
+  <div style="width: 50px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px;">
+    <div style="flex-grow: 1; width: 20px; background: #eee; border-radius: 20px; position: relative; border: 2px solid #ff85a2; overflow: hidden;">
+      <div id="meterFill" style="position: absolute; bottom: 0; width: 100%; height: 0%; background: linear-gradient(to top, #ff85a2, #ff4f81); transition: height 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);"></div>
+    </div>
+    <span style="font-size: 20px; margin-top: 5px;">🔥</span>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; flex-direction: column; text-align: left;">
+    <h3 style="text-align: center;">🧩 CUTE QUIZ</h3>
+    <div style="flex-grow: 1; margin-top: 15px;">
+      <p id="quizQuestion" style="font-weight: 600; min-height: 60px;"></p>
+      <div id="quizOptions" style="display: grid; gap: 8px;"></div>
+      <p id="quizAnswer" style="font-weight: bold; color: #ff4f81; min-height: 20px;"></p>
+
+    </div>
+    
+    <div style="margin-top: auto; padding-top: 15px; border-top: 1px dashed #ff85a2;">
+      <p id="meterStatus" style="font-size: 11px; color: #888; margin-bottom: 10px;">Status: Only correct answers raise the heat! 🔥</p>
+      <button class="magic-btn" onclick="resetQuizGame()" style="padding: 8px 15px; width: 100%; font-size: 0.8rem;">Restart Meter 🔄</button>
+    </div>
+  </div>
+</div>
+
+<div class="game">
+<h3>🎨 PICK YOUR MOOD </h3>
+<div class="mood">
+<span onclick="setMood(0)">💖</span>
+<span onclick="setMood(1)">🌈</span>
+<span onclick="setMood(2)">🌸</span>
+<span onclick="setMood(3)">✨</span>
+<span onclick="setMood(4)">🌺</span>
+<span onclick="setMood(5)">🌞</span>
+<span onclick="setMood(6)">🌙</span>
+<span onclick="setMood(7)">🔥</span>
+<span onclick="setMood(8)">🌊</span>
+<span onclick="setMood(9)">🌳</span>
+<span onclick="setMood(10)">❄️</span>
+<span onclick="setMood(11)">🌻</span>
+<span onclick="setMood(12)">🌟</span>
+<span onclick="setMood(13)">🍀</span>
+<span onclick="setMood(14)">💎</span>
+<span onclick="setMood(15)">🍂</span>
+<span onclick="setMood(16)">🎵</span>
+<span onclick="setMood(17)">🌌</span>
+<span onclick="setMood(18)">🎀</span>
+<span onclick="setMood(19)">🌹</span>
+<span onclick="setMood(20)">🦋</span>
+<span onclick="setMood(21)">🍓</span>
+<span onclick="setMood(22)">🍁</span>
+<span onclick="setMood(23)">⚡</span>
+<span onclick="setMood(24)">🎉</span>
+<span onclick="setMood(25)">💫</span>
+<span onclick="setMood(26)">🍄</span>
+<span onclick="setMood(27)">🍌</span>
+<span onclick="setMood(28)">🎈</span>
+<span onclick="setMood(29)">🌷</span>
+<span onclick="setMood(30)">🍍</span>
+<span onclick="setMood(31)">🪁</span>
+<span onclick="setMood(32)">🌼</span>
+<span onclick="setMood(33)">🦄</span>
+<span onclick="setMood(34)">🪐</span>
+<span onclick="setMood(35)">🌠</span>
+
+
+</div>
+</div>
+
+<div class="game">
+<h3>🔐 SECRET NOTE <h5>This Note Will Show Only After The Scoreing 5 in Catch the Heat Game.</h5></h3>
+
+<p class="hidden-msg" id="hiddenMsg">You are precious, loved & admired 💝</p>
+</div>
+
+<div class="game">
+<h3>💌 Compliment</h3>
+<button onclick="compliment()">Tap</button>
+<p id="comp"></p>
+</div>
+
+<div class="game">
+  <h3>🎁 Gift Shower</h3>
+  <p>🎁💍🧸👗💄💎🌸🎀</p>
+  <button class="magic-btn" onclick="openGiftPage()">Open Gifts 🎀</button>
+</div>
+
+<div class="game">
+<h3>🎆 Fireworks</h3>
+<button onclick="startFireworksWithText()">Celebrate 🎉</button>
+
+</div>
+
+<div class="game">
+<h3>💬 Birthday Wishes</h3>
+<p>May your life be filled with love & happiness 💖</p>
+</div>
+
+<div class="game">
+<h3>🎵 Music Control</h3>
+<button onclick="music.pause()">Pause</button>
+<button onclick="music.play()">Play</button>
+</div>
+
+<div class="game">
+  <h3>📸 Memories</h3>
+  <p>Every moment with you is special ✨</p>
+  
+<button class="magic-btn" onclick="openMemoriesPage()">View Memories 📷</button>
+<hr style="border: 1px dashed #ff85a2; margin: 30px 0;">
+<div class="game">
+    <h3>🌈 MAGIC BACKGROUND</h3>
+    <p style="font-size: 13px; margin-bottom: 10px;">Let the colors celebrate you, Mamta! ✨</p>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+        <button id="startColorBtn" style="background: #43e97b; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold;" onclick="toggleBgParty(true)">Start Party 🎉</button>
+        <button id="stopColorBtn" style="background: #ff4f81; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; display: none;" onclick="toggleBgParty(false)">Stop 🛑</button>
+    </div>
+</div>
+</div>
+
+<div class="game" id="bottleGame">
+  <h3>🍾 MESSAGE IN A BOTTLE</h3>
+  <div id="oceanArea" style="height: 180px; background: linear-gradient(#81d4fa, #0288d1); border-radius: 20px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; touch-action: none; cursor: pointer;">
+    
+    <div id="magicBottle" style="font-size: 60px; transition: transform 0.1s; user-select: none;">🍾</div>
+    
+    <div id="hiddenMessage" style="display: none; position: absolute; background: #fff9c4; padding: 20px; border: 2px solid #fbc02d; border-radius: 10px; width: 85%; font-family: 'Georgia', serif; font-size: 14px; color: #5d4037; box-shadow: 0 8px 20px rgba(0,0,0,0.4); z-index: 20; text-align: center;">
+        <p id="randomScrollText" style="margin-bottom: 15px; line-height: 1.4; font-weight: bold; min-height: 40px;"></p>
+        <button onclick="resetBottle()" style="background: #fbc02d; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; font-weight: bold; color: #5d4037;">Close Scroll 📜</button>
+    </div>
+  </div>
+  
+  <p id="shakeStatus" style="font-size: 13px; margin-top: 10px; color: #333; font-weight: bold;">Rub the ocean or Tap the bottle! ✨</p>
+  
+  <div style="width: 80%; background: #ddd; height: 12px; border-radius: 6px; margin: 8px auto; overflow: hidden; border: 1px solid #bbb;">
+    <div id="shakeBar" style="width: 0%; height: 100%; background: linear-gradient(to right, #ff4f81, #ff85a2); transition: width 0.1s;"></div>
+  </div>
+</div>
+
+<div class="game" id="butterflyGarden">
+  <h3>🦋 MAGIC BUTTERFLY GARDEN</h3>
+  <div id="gardenCanvas" style="height: 150px; background: #f0fff0; border: 2px solid #98fb98; border-radius: 20px; position: relative; overflow: hidden; cursor: pointer;" onclick="plantFlower(event)">
+    <p id="gardenHint" style="margin-top: 60px; font-size: 13px; color: #2e8b57;">Tap inside to plant flowers! 🌷</p>
+  </div>
+  <p id="gardenStatus" style="font-size: 12px; margin-top: 8px; color: #555;">Flowers planted: <span id="flowerCount">0</span>/10 to summon the Butterfly</p>
+  <button class="magic-btn" style="padding: 5px 15px; font-size: 0.8rem;" onclick="resetGarden()">Clear Garden 🌿</button>
+</div>
+
+<div class="game">
+  <h3>❤️ LOVE EXPLOSION</h3>
+  <p style="font-size: 13px;">How much love do you want today?</p>
+  <div id="mainHeart" onclick="incrementLove(event)" 
+     style="font-size: 100px; cursor: pointer; margin: 10px auto; display: block; text-align: center; transition: transform 0.1s; width: fit-content;">
+     ❤️
+  </div>
+  <button class="magic-btn" onclick="explodeNow()">💥 Explode Love</button>
+  <p id="loveCount" style="font-weight: bold; color: #ff4f81; font-size: 18px;">Love Level: 0</p>
+</div>
+
+<div class="game">
+  <h3>⏳ TIME TRAVEL</h3>
+  <div id="timeTravelBox" style="border: 2px solid #ff85a2; border-radius: 15px; padding: 10px; background: #fff5f7;">
+    <img id="travelImg" src="MAMTA/mamta.jpg" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px;">
+    <p id="travelCaption" style="font-weight: bold; margin-top: 10px; color: #ff4f81; font-size: 14px;">Where it all began... 🌸</p>
+  </div>
+  <button class="magic-btn" onclick="nextMemory()" style="margin-top: 10px; padding: 8px 15px; font-size: 0.8rem;">Next Era ✨</button>
+</div>
+
+</div>
+
+<p class="soft-text" style="margin-top:25px"><B>— From GAURAV 💝</B></p>
+</div>
+
+<script>
+let startTime,score=0,gamesPlayed=0,quizIndex=0;
+
+const quizData = [
+    { q: "What is Mamta's absolute favorite color?", o: ["Pink", "Red", "Blue", "Lavender"], a: 0 },
+    { q: "If Mamta was an animal, which one would she be?", o: ["Lioness", "Cute Kitten", "Butterfly", "Rabbit"], a: 1 },
+    { q: "What is Mamta's favorite season?", o: ["Rainy", "Winter", "Summer", "Spring"], a: 1 },
+    { q: "How much does Mamta love chocolate?", o: ["A little", "Medium", "Infinity!", "Not at all"], a: 2 },
+    { q: "What is Mamta's superpower?", o: ["Flying", "Being too cute", "Invisible", "Super strength"], a: 1 },
+    { q: "Which snack can Mamta never say no to?", o: ["Pizza", "Gol Gappa", "Chocolate", "Chips"], a: 1 },
+    { q: "Is Mamta a morning person or a night owl?", o: ["Morning Bird", "Night Owl", "Always Sleeping", "Always Active"], a: 1 },
+    { q: "What makes Mamta the happiest?", o: ["Shopping", "Food", "Small gestures", "Sleeping"], a: 2 },
+    { q: "What is Mamta's dream destination?", o: ["Paris", "Switzerland", "Maldives", "Kedarnath"], a: 3 },
+    { q: "Which flower defines Mamta's personality?", o: ["Rose", "Sunflower", "Lily", "Tulip"], a: 0 },
+    { q: "If Mamta was a fruit, what would she be?", o: ["Mango", "Strawberry", "Cherry", "Apple"], a: 1 },
+    { q: "What is Mamta's favorite hobby?", o: ["Dancing", "Reading", "Overthinking", "Cooking"], a: 2 },
+    { q: "How many hours can Mamta sleep?", o: ["5 hours", "8 hours", "12 hours", "Forever"], a: 3 },
+    { q: "What is Mamta's reaction to a surprise?", o: ["Screams", "Blushes", "Cries", "Speechless"], a: 1 },
+    { q: "What kind of movies does Mamta like?", o: ["Horror", "Romantic", "Action", "Comedy"], a: 1 },
+    { q: "What is Mamta's favorite drink?", o: ["Tea", "Coffee", "Cold Drink", "Juice"], a: 0 },
+    { q: "Who is Mamta's favorite person?", o: ["Mom", "Dad", "Bestie", "You know who!"], a: 3 },
+    { q: "What is Mamta's favorite outfit style?", o: ["Ethnic", "Western", "Pajamas", "Oversized Tees"], a: 0 },
+    { q: "If Mamta wins a lottery, what will she buy first?", o: ["Car", "Makeup", "Food", "Give to Charity"], a: 1 },
+    { q: "How does Mamta handle stress?", o: ["Crying", "Eating", "Sleeping", "Talking it out"], a: 2 },
+    { q: "What is the one thing Mamta hates?", o: ["Lies", "Late replies", "Noisy places", "Crowds"], a: 1 },
+    { q: "What is Mamta's favorite emoji?", o: ["💖", "🎀", "🙈", "🥺"], a: 1 },
+    { q: "Is Mamta more Emotional or Practical?", o: ["Emotional", "Practical", "Both", "Neither"], a: 0 },
+    { q: "What is Mamta's lucky number?", o: ["7", "3", "9", "5"], a: 0 },
+    { q: "Does Mamta believe in soulmates?", o: ["Yes", "No", "Maybe", "Only in movies"], a: 0 },
+    { q: "What is Mamta's favorite street food?", o: ["Momos", "Samosa", "Aloo Tikki", "Vada Pav"], a: 0 },
+    { q: "What would Mamta choose?", o: ["Mountains", "Beaches", "Cities", "Forests"], a: 0 },
+    { q: "What is Mamta's signature hair style?", o: ["Open hair", "Ponytail", "Bun", "Braids"], a: 0 },
+    { q: "How many selfies does Mamta take daily?", o: ["Zero", "5-10", "50+", "Infinite"], a: 2 },
+    { q: "Final Question: Is Mamta 100% Perfect?", o: ["Yes", "Absolutely", "Definitely", "All of the above"], a: 3 }
+];
+
+function loadQuiz() {
+    if (quizIndex === 0) {
+        shuffleArray(quizData);
+    }
+
+    const q = quizData[quizIndex];
+    document.getElementById("quizQuestion").innerText = q.q;
+    const optionsContainer = document.getElementById("quizOptions");
+    optionsContainer.innerHTML = "";
+    document.getElementById("quizAnswer").innerText = "";
+
+    let shuffledOptions = q.o.map((text, index) => ({ text, isCorrect: index === q.a }));
+    shuffleArray(shuffledOptions);
+
+    shuffledOptions.forEach((opt) => {
+        let btn = document.createElement("button");
+        btn.className = "quiz-opt"; 
+        btn.innerText = opt.text;
+        btn.onclick = () => checkAnswer(opt.isCorrect, btn);
+        optionsContainer.appendChild(btn);
+    });
+}
+
+
+
+let correctCount = 0; 
+
+function checkAnswer(isCorrect, clickedBtn) {
+    const options = document.getElementById("quizOptions").children;
+    const meterFill = document.getElementById("meterFill");
+    const answerDisplay = document.getElementById("quizAnswer");
+
+    const funnyCorrect = [
+        "✨ So smart — I’m proud of you 💕",
+        "🌸 That was a beautiful answer, Mamta!",
+        "💝 Perfect choice, just like you",
+        "🌟 Absolutely right — well done!",
+        "👑 Brilliant as always, Mamta",
+        "😄 You nailed it!",
+        "🔥 Sharp move, Mamta!",
+        "🎊 That was impressive!",
+        "💫 Right on point, Mamta",
+        "🥳 Great job — keep going!",
+        "💖 Your mind shines bright, Mamta",
+        "🌹 So thoughtful — I love this",
+        "✨ Smart and lovely combo!",
+        "👑 Queen-level answer, Mamta!",
+        "💕 That was perfect, Mamta",
+        "🌟 Correct — nicely done",
+        "🌸 Very well answered, Mamta",
+        "💎 Excellent thinking",
+        "✨ Spot on!",
+        "💖 You got it right, Mamta",
+        "🎀 You’re doing amazing, Mamta!",
+        "💫 Such a smart answer!",
+        "🌺 Beautifully done, Mamta",
+        "✨ Your intelligence shows!",
+        "🎉 Perfect answer — proud of you!",
+        "💝 Mamta, that was lovely",
+        "👑 Always impressive, Mamta"
+    ];
+
+    const funnyIncorrect = [
+        "😅 Oops! Not this one, Mamta",
+        "🤭 Close… but the answer ran away",
+        "🙈 Almost! Try again",
+        "😄 Wrong turn, but nice confidence!",
+        "🌀 That answer is on vacation",
+        "🤔 Hmm… interesting choice, Mamta",
+        "😆 Creative answer — but nope!",
+        "🧠 Brain loading… please retry",
+        "🎯 Missed it by a little",
+        "🤹 Nice try, Mamta!",
+        "💫 Not quite right, but keep going",
+        "🌼 Good attempt — try once more",
+        "😊 No worries, Mamta — next one!",
+        "🔄 Let’s give it another shot",
+        "🎀 Wrong answer, right effort",
+        "🤭 That answer needs a rethink",
+        "😜 The question says “nope”",
+        "🧩 Puzzle not solved this time",
+        "🎂 Birthday magic says try again!",
+        "😂 Funny guess, Mamta!",
+        "🐣 Almost there — tiny mistake",
+        "🎉 Oops moment! Next one will be right",
+        "💖 Wrong answer, still adorable",
+        "🌈 Nice guess — but not today",
+        "😄 Mamta, that one was sneaky wrong"
+    ];
+
+
+    for(let btn of options) { 
+        btn.style.pointerEvents = "none"; 
+    }
+
+    if (isCorrect) {
+        clickedBtn.classList.add('correct-btn'); // Turn Green
+        correctCount++; 
+        
+        let progress = (correctCount / 10) * 100;
+        meterFill.style.height = Math.min(progress, 100) + "%";
+        
+        const randomSuccess = funnyCorrect[Math.floor(Math.random() * funnyCorrect.length)];
+        answerDisplay.innerText = randomSuccess;
+        answerDisplay.style.color = "#43e97b";
+
+        if (correctCount === 10) {
+            setTimeout(triggerGrandFinale, 1000);
+            return;
+        }
+    } else {
+        clickedBtn.style.background = "#ff4f81"; // Turn Red
+        
+        const currentQ = quizData.find(item => item.q === document.getElementById("quizQuestion").innerText);
+        const correctText = currentQ.o[currentQ.a];
+
+        const randomFunny = funnyIncorrect[Math.floor(Math.random() * funnyIncorrect.length)];
+        answerDisplay.innerText = `${randomFunny} (Correct: ${correctText})`;
+        answerDisplay.style.color = "#ff4f81";
+    }
+
+    if (correctCount < 10) {
+        setTimeout(nextQuestion, 2000);
+    }
+}
+
+
+function nextQuestion() {
+    quizIndex++;
+    if (quizIndex < quizData.length && correctCount < 10) {
+        loadQuiz(); 
+    } else if (correctCount < quizData.length) {
+        document.getElementById("quizQuestion").innerText = "Quiz Finished!";
+        document.getElementById("quizOptions").innerHTML = 
+            `<p style='text-align:center;'>You got ${correctCount}/${quizData.length} correct! <br> Restart to break the meter! 🎀</p>
+             <button class='magic-btn' onclick='resetQuizGame()'>Try Again</button>`;
+    }
+}
+
+
+function triggerGrandFinale() {
+    // 1. Shake the screen
+    document.body.classList.add('shake-screen');
+    startFlowerShower(); 
+    
+    // 2. Transform the Quiz box into the Gift
+    const quizContainer = document.getElementById("quizQuestion").parentElement;
+    document.getElementById("quizOptions").innerHTML = "";
+    document.getElementById("quizQuestion").innerHTML = `
+        <div id="giftWrapper" style="text-align:center; width:100%;">
+            <h2 style="color:#ff4f81;">100% CUTE DETECTED!</h2>
+            <div id="theGift" class="box-shake" style="font-size:100px; cursor:pointer; margin:20px 0;" onclick="openGrandPrize()">
+                🎁
+            </div>
+            <p style="font-weight:bold; color:#666;">Mamta, click the gift to unbox! ✨</p>
+        </div>
+    `;
+    setTimeout(() => document.body.classList.remove('shake-screen'), 1000);
+}
+
+function openGrandPrize() {
+    // 1. Trigger many hearts for the "Explosion"
+    for(let i=0; i<100; i++){
+        setTimeout(() => createParticle(window.innerWidth/2, window.innerHeight/2), i * 30);
+    }
+
+    // 2. Show the black screen and image after a tiny delay
+    setTimeout(() => {
+        const overlay = document.getElementById("fullScreenOverlay");
+        overlay.style.display = "flex";
+        document.body.style.overflow = "hidden"; // Stops page scrolling
+    }, 3000);
+}
+
+function startFlowerShower() {
+    for(let i=0; i<50; i++) {
+        setTimeout(() => {
+            let e = document.createElement('div');
+            e.className = 'flower-shower';
+            e.innerText = ['🌸','🌺','🌹','🌷','🌼'][Math.floor(Math.random()*5)];
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(e);
+            setTimeout(() => e.remove(), 5000);
+        }, i * 100);
+    }
+}
+
+
+
+function enterPage(){
+page1.classList.add('hidden');
+page2.classList.remove('hidden');
+music.play();
+startTime=Date.now();
+setInterval(()=>timer.innerText=
+`You’ve been smiling here for ${Math.floor((Date.now()-startTime)/1000)} seconds ⏳`,1000);
+floatLoop();
+loadQuiz();
+}
+
+function floatLoop(){
+setInterval(()=>{
+let e=document.createElement('div');
+e.className='float';
+e.innerText=Math.random()>0.5?'💖':'🌸';
+e.style.left=Math.random()*100+'vw';
+e.style.animationDuration=4+Math.random()*4+'s';
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),8000);
+},900);
+}
+
+
+function startHeartGame(){
+score=0;
+document.getElementById('score').innerText='Score: 0';
+for(let i=0;i<10;i++){
+let heart=document.createElement('div');
+heart.innerText='💖';
+heart.style.position='fixed';
+heart.style.left=Math.random()*90+'vw';
+heart.style.top=Math.random()*80+'vh';
+heart.style.fontSize='40px';
+heart.style.cursor='pointer';
+document.body.appendChild(heart);
+heart.onclick=()=>{
+score++;
+document.getElementById('score').innerText='Score: '+score;
+heart.remove();
+gamesPlayed++;
+checkUnlock();
+};
+setTimeout(()=>heart.remove(),3000);
+}
+}
+
+// added function
+document.querySelectorAll('.game')[1].querySelector('button').innerText = 'Start';
+
+function checkUnlock(){ 
+    if(score >= 5){ 
+        hiddenMsg.style.display = 'block'; 
+        hiddenMsg.innerHTML = '<span style="color:#ff4f81; font-weight:bold; font-size:18px;">🎉 Congratulations!</span><br><span style="color:#ff85a2; font-size:16px;">You reached 5 points! 💝</span></span><br><span style="color:#8B0000; font-size:16px;">MY MESSAGE THAT I WANT TO WRITE. 💝</span>';
+        
+        hiddenMsg.style.display = 'block';
+        setTimeout(() => { hiddenMsg.style.display = 'none'; }, 5000); // hides after 3 seconds
+
+    } else { 
+        hiddenMsg.style.display = 'none'; 
+    }
+}
+
+
+function setMood(i){
+    // Array of solid colors instead of pairs
+    let m = [
+        '#ffb6c1', '#a1c4fd', '#fbc2eb', '#fff1eb', '#ffecd2', 
+        '#f9d29d', '#c1dfc4', '#ffdde1', '#e0c3fc', '#f093fb', 
+        '#4facfe', '#43e97b', '#fa709a', '#ffefba', '#00c6ff', 
+        '#fdfbfb', '#fbc2eb', '#f6d365', '#ff9a9e', '#a1c4fd',
+        '#d4fc79', '#84fab0', '#cfd9df', '#e0eafc', '#f093fb', 
+        '#43e97b', '#fa709a', '#ffefba', '#f6d365', '#ff9a9e', 
+        '#c1dfc4', '#4facfe', '#8e2de2', '#0f2027', '#43cea2', '#1d2671'
+    ];
+    
+    document.body.style.transition = "background-color 1s"; 
+    document.body.style.background = m[i]; 
+    document.body.style.backgroundColor = m[i]; 
+}
+
+function compliment(){
+let c=[
+'You are magical ✨','Your smile is everything 💖','You shine 🌸','You are loved 💝',
+'You are amazing 🌟','Keep glowing 💫','You are the best 💕','Your happiness matters 💝',
+'Your energy is infectious 🌸','You are a superstar 💖','You make life brighter ✨',
+'You are brilliant 💎','Your kindness inspires 💕','You light up the room 🌈',
+'You are wonderful 🌹','You are unique 💫','You spread joy 🎉','Your laughter is precious 😄',
+'You are beautiful inside & out 🌸','You are unstoppable 💪'
+];
+comp.innerText=c[Math.floor(Math.random()*c.length)];
+}
+
+
+let isBlowing = false; 
+function blowClick(el) {
+    if (el.innerText !== '💝') {
+        el.style.opacity = '0.3';
+        el.style.transform = 'scale(0.5)';
+        
+        setTimeout(() => {
+            el.innerText = '💝';
+            el.style.opacity = '1';
+            el.style.transform = 'scale(1)';
+            gamesPlayed++;
+            checkUnlock();
+        }, 600); // The delay that makes it feel "slow"
+    }
+}
+
+function startMic() {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const analyser = audioContext.createAnalyser();
+        const microphone = audioContext.createMediaStreamSource(stream);
+        const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+
+        analyser.fftSize = 512;
+        microphone.connect(analyser);
+        analyser.connect(scriptProcessor);
+        scriptProcessor.connect(audioContext.destination);
+
+        scriptProcessor.onaudioprocess = () => {
+            const array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+            let values = 0;
+            for (let i = 0; i < array.length; i++) values += array[i];
+            let average = values / array.length;
+
+            if (average > 40 && !isBlowing) { 
+                const cakes = Array.from(document.querySelectorAll('.cake')).filter(c => c.innerText !== '💝');
+                if (cakes.length > 0) {
+                    isBlowing = true; 
+                    blowClick(cakes[0]); 
+                    setTimeout(() => { isBlowing = false; }, 1000); 
+                }
+            }
+        };
+    }).catch(err => alert("Mic access required to blow candles!"));
+}
+
+function resetBlowGame() {
+    const original = ['🎂', '🧁', '🍰', '🍮'];
+    document.querySelectorAll('.cake').forEach((el, i) => {
+        el.innerText = original[i];
+        el.style.opacity = '1';
+        el.style.transform = 'scale(1)';
+    });
+    score = 0;
+    gamesPlayed = 0;
+}
+
+
+function openGiftPage(){
+  page2.classList.add('hidden');
+  page3.classList.remove('hidden');
+}
+
+function backToGames(){
+  page3.classList.add('hidden');
+  page2.classList.remove('hidden');
+}
+
+
+function startFireworksWithText() {
+    const existingCanvas = document.getElementById('fireworkCanvas');
+    const fromGauravLine = document.querySelector('p.soft-text b');
+    const fromGauravRect = fromGauravLine.getBoundingClientRect();
+    const startY = fromGauravRect.top + fromGauravRect.height / 2;
+
+
+    if (existingCanvas) existingCanvas.remove(); 
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'fireworkCanvas';
+    document.getElementById('page2').appendChild(canvas);
+    canvas.style.position = 'fixed';
+    canvas.style.left = '0';
+    canvas.style.top = '0';
+    canvas.style.pointerEvents = 'none';
+
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let fireworks = [];
+    let particles = [];
+
+    class Firework {
+        constructor(x, y, tx, ty) {
+            this.x = x; this.y = y;
+            this.tx = tx; this.ty = ty;
+            this.distanceToTarget = Math.hypot(tx - x, ty - y);
+            this.speed = 4;
+            this.acceleration = 1.05;
+            this.brightness = Math.random() * 50 + 50;
+            this.coordinates = [[x, y]];
+            this.angle = Math.atan2(ty - y, tx - x);
+        }
+        update(index) {
+            this.coordinates.push([this.x, this.y]);
+            if (this.coordinates.length > 3) this.coordinates.shift();
+
+            this.speed *= this.acceleration;
+            const vx = Math.cos(this.angle) * this.speed;
+            const vy = Math.sin(this.angle) * this.speed;
+            this.x += vx;
+            this.y += vy;
+
+            if (Math.hypot(this.tx - this.x, this.ty - this.y) < 5) {
+                createParticles(this.tx, this.ty);
+                fireworks.splice(index, 1);
+            }
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.moveTo(this.coordinates[0][0], this.coordinates[0][1]);
+            ctx.lineTo(this.x, this.y);
+            ctx.strokeStyle = `hsl(${Math.random()*360},100%,${this.brightness}%)`;
+            ctx.stroke();
+        }
+    }
+
+    class Particle {
+        constructor(x, y) {
+            this.x = x; this.y = y;
+            this.coordinates = [[x, y]];
+            this.angle = Math.random() * 2 * Math.PI;
+            this.speed = Math.random() * 5 + 2;
+            this.friction = 0.95;
+            this.gravity = 0.7;
+            this.hue = Math.random() * 360;
+            this.brightness = Math.random() * 50 + 50;
+            this.alpha = 1;
+            this.decay = Math.random() * 0.03 + 0.015;
+        }
+        update(index) {
+            this.coordinates.push([this.x, this.y]);
+            if (this.coordinates.length > 5) this.coordinates.shift();
+
+            this.speed *= this.friction;
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + this.gravity;
+            this.alpha -= this.decay;
+
+            if (this.alpha <= 0.05) particles.splice(index, 1);
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.moveTo(this.coordinates[0][0], this.coordinates[0][1]);
+            ctx.lineTo(this.x, this.y);
+            ctx.strokeStyle = `hsla(${this.hue},100%,${this.brightness}%,${this.alpha})`;
+            ctx.stroke();
+        }
+    }
+
+    function createParticles(x, y) {
+        for (let i = 0; i < 30; i++) particles.push(new Particle(x, y));
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0,0,0,0.2)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalCompositeOperation = 'lighter';
+
+        fireworks.forEach((f, i) => { f.update(i); f.draw(); });
+        particles.forEach((p, i) => { p.update(i); p.draw(); });
+    }
+
+    // animate();
+    // --- DRAW THE TEXT EVERY FRAME FOR 10 SECONDS ---
+    const text = "HAPPY BIRTHDAY MAMTA";
+    const textStart = Date.now();
+
+    function drawText() {
+        const elapsed = Date.now() - textStart;
+        
+        // Only start drawing after 1000ms (1 second)
+        if (elapsed > 1000 && elapsed < 10000) { 
+            const fadeDuration = 6000; 
+            // Calculate alpha: 0 at 1s, 1 at 3s
+            let alpha = Math.min((elapsed - 1000) / fadeDuration, 1);
+            
+            let fontSize = window.innerWidth < 600 ? "40px" : "80px";
+            ctx.font = `bold ${fontSize} Poppins, Arial`;
+            // ctx.font = "bold 90px Poppins, Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            
+            // Using rgba to apply the alpha/transparency
+            ctx.fillStyle = `rgba(179, 0, 0, ${alpha})`; 
+            ctx.fillText(text, canvas.width / 2, canvas.height / 3);
+        }
+        
+        // Keep the animation loop going as long as we are under 10 seconds
+        if (elapsed < 6000) {
+            requestAnimationFrame(drawText);
+        }
+    }
+drawText();
+    // TEXT TO FIREWORKS: shift it upward by 100px
+    const textY = canvas.height / 2 - 100; 
+
+    ctx.font = "bold 100px Arial";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "white";
+    ctx.fillText("HAPPY BIRTHDAY MAMTA", canvas.width/2, textY);
+
+    const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    setTimeout(() => {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    }, 1000);
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    const pixels = [];
+    for (let y = 0; y < canvas.height; y += 8) {
+        for (let x = 0; x < canvas.width; x += 8) {
+            const alpha = imageData.data[(y*canvas.width + x)*4 + 3];
+            if(alpha > 128) pixels.push([x, y]);
+        }
+    }
+
+    let count = 0;
+    function launchTextFireworks() {
+        if(count >= pixels.length) return;
+        for(let i=0; i<5; i++){
+            if(count >= pixels.length) break;
+            const p = pixels[count];
+            fireworks.push(new Firework(canvas.width/2, startY, p[0], p[1]));
+            count++;
+        }
+        setTimeout(launchTextFireworks, 50);
+    }
+
+    launchTextFireworks();
+    animate();
+}
+
+function openMemoriesPage(){
+  page2.classList.add('hidden');
+  page4.classList.remove('hidden');
+}
+
+function backToGamesFromMemories(){
+  page4.classList.add('hidden');
+  page2.classList.remove('hidden');
+}
+
+function openPopup(img){
+  document.getElementById("popupImg").src = img.src;
+  document.getElementById("imgPopup").style.display = "flex";
+}
+
+function closePopup(){
+  document.getElementById("imgPopup").style.display = "none";
+}
+
+function initScratch() {
+    const canvas = document.getElementById('scratchCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Fill the canvas with a silver "scratchable" layer
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#C0C0C0'; 
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Add some text on top of the silver
+    ctx.fillStyle = '#888';
+    ctx.font = 'bold 14px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('SCRATCH HERE 🎀', 100, 105);
+
+    let isDrawing = false;
+
+    function scratch(e) {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 20, 0, Math.PI * 2);
+        ctx.fill();
+    
+    // The secret message will now only trigger via the 'Catch the Hearts' game logic
+    }
+
+    // Mouse Events
+    canvas.addEventListener('mousedown', () => isDrawing = true);
+    window.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mousemove', scratch);
+    
+    // Touch Events (for Mobile)
+    canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+    canvas.addEventListener('touchend', () => isDrawing = false);
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratch(e); });
+}
+
+// Start the scratch card automatically when the page loads
+setTimeout(initScratch, 500);
+
+
+// 1. List your images here
+const scratchPhotos = [
+    "SCRATCH/scratch1.jpg", 
+    "SCRATCH/scratch2.jpg", 
+    "SCRATCH/scratch3.jpg", 
+    "SCRATCH/scratch4.jpg",
+    "SCRATCH/scratch5.jpg", 
+    "SCRATCH/scratch6.jpg", 
+    "SCRATCH/scratch7.jpg", 
+    "SCRATCH/scratch8.jpg",
+    "SCRATCH/scratch9.jpg", 
+    "SCRATCH/scratch10.jpg", 
+    "SCRATCH/scratch11.jpg", 
+    "SCRATCH/scratch12.jpg",
+    "SCRATCH/scratch13.jpg", 
+    "SCRATCH/scratch14.jpg", 
+    "SCRATCH/scratch15.jpg", 
+    "SCRATCH/scratch16.jpg",
+    "SCRATCH/scratch17.jpg", 
+    "SCRATCH/scratch18.jpg", 
+    "SCRATCH/scratch19.jpg", 
+    "SCRATCH/scratch20.jpg"
+];
+
+function initScratch() {
+    // 2. Pick a random photo from the list
+    const randomPic = scratchPhotos[Math.floor(Math.random() * scratchPhotos.length)];
+    
+    // 3. Update the image shown under the scratch layer
+    const imgElement = document.getElementById('scratchImage');
+    if(imgElement) imgElement.src = randomPic;
+
+    // --- Standard Scratch Logic Below ---
+    const canvas = document.getElementById('scratchCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#C0C0C0'; 
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = '#888';
+    ctx.font = 'bold 14px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('SCRATCH HERE 🎀', 90, 95);
+
+    let isDrawing = false;
+
+    function scratch(e) {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 20, 0, Math.PI * 2);
+        ctx.fill();    
+    }
+
+    canvas.addEventListener('mousedown', () => isDrawing = true);
+    window.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mousemove', scratch);
+    canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+    canvas.addEventListener('touchend', () => isDrawing = false);
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratch(e); });
+}
+
+
+function resetQuizGame() {
+    quizIndex = 0;
+    correctCount = 0;
+    document.getElementById("meterFill").style.height = "0%";
+    document.getElementById("quizAnswer").innerText = "";
+    loadQuiz();
+}
+
+//upper added req...5
+
+// --- 1. TIME TRAVEL LOGIC ---
+const memories = [
+    {img: "MEMORY/memory1.jpg", text: "The day we first met... 🌸"},
+    {img: "MEMORY/memory2.jpg", text: "Remember this smile? It's my favorite! 😍"},
+    {img: "MEMORY/memory3.jpg", text: "You looked like an angel here. ✨"},
+    {img: "MEMORY/memory4.jpg", text: "Every day with you is a new adventure. 💖"},
+    {img: "MEMORY/memory5.jpg", text: "The day we first met... 🌸"},
+    {img: "MEMORY/memory6.jpg", text: "Remember this smile? It's my favorite! 😍"},
+    {img: "MEMORY/memory7.jpg", text: "You looked like an angel here. ✨"},
+    {img: "MEMORY/memory8.jpg", text: "Every day with you is a new adventure. 💖"},
+    {img: "MEMORY/memory9.jpg", text: "The day we first met... 🌸"},
+    {img: "MEMORY/memory10.jpg", text: "Remember this smile? It's my favorite! 😍"},
+    
+];
+let memIdx = 0;
+
+function nextMemory() {
+    memIdx = (memIdx + 1) % memories.length;
+    const img = document.getElementById("travelImg");
+    const cap = document.getElementById("travelCaption");
+    
+    // Add a quick fade effect
+    img.style.opacity = 0;
+    setTimeout(() => {
+        img.src = memories[memIdx].img;
+        cap.innerText = memories[memIdx].text;
+        img.style.opacity = 1;
+    }, 200);
+}
+
+// --- 2. BOUQUET BUILDER LOGIC ---
+function addFlower(emoji) {
+    const area = document.getElementById("bouquetArea");
+    // If it gets too long, clear it to start over
+    if (area.innerText.length > 24) {
+        area.innerText = "";
+    }
+    area.innerText += emoji;
+    
+    // Playful bounce animation
+    area.style.transform = "scale(1.2)";
+    setTimeout(() => area.style.transform = "scale(1)", 150);
+}
+
+// --- 3. HEART EXPLOSION LOGIC ---
+let loveScore = 0;
+function countLove() {
+    loveScore++;
+    document.getElementById("loveCount").innerText =
+        "Love Level: " + loveScore;
+
+    const mainHeart = document.getElementById("mainHeart");
+    mainHeart.style.transform = "scale(0.7)";
+    setTimeout(() => mainHeart.style.transform = "scale(1)", 150);
+}
+
+function explodeNow() {
+    const mainHeart = document.getElementById("mainHeart");
+    const rect = mainHeart.getBoundingClientRect();
+
+    // 1. Get position of the heart
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    // 2. Explode hearts based on the CURRENT level
+    for (let i = 0; i < loveScore; i++) {
+        createParticle(x, y);
+    }
+
+    // 3. THE RESET (Add these two lines here)
+    loveScore = 0; 
+    document.getElementById("loveCount").innerText = "Love Level: 0";
+
+    // 4. Temporary hide/bounce effect
+    mainHeart.style.visibility = "hidden";
+    setTimeout(() => { mainHeart.style.visibility = "visible"; }, 1000);
+}
+
+
+
+function createParticle(x, y) {
+    const particle = document.createElement('div');
+    particle.className = 'burst-heart';
+    particle.innerText = Math.random() > 0.5 ? '💖' : '❤️';
+    
+    // Starting position (center)
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+
+    // Calculate random direction and distance to cover the WHOLE screen
+    const angle = Math.random() * Math.PI * 2; 
+    const distance = Math.max(window.innerWidth, window.innerHeight); // Travels to edges
+
+    const tx = Math.cos(angle) * distance + 'px';
+    const ty = Math.sin(angle) * distance + 'px';
+    
+    particle.style.setProperty('--tx', tx);
+    particle.style.setProperty('--ty', ty);
+
+    document.body.appendChild(particle);
+
+    const delay = Math.random() * 800;
+    particle.style.animationDelay = delay + "ms";
+    // Remove heart after it leaves the screen
+    setTimeout(() => {
+        particle.remove();
+    }, 5000); 
+}
+
+
+
+function incrementLove(event) {
+    loveScore++; // This adds 1 to the current score
+    document.getElementById("loveCount").innerText = "Love Level: " + loveScore;
+    
+    // Pulse effect for the heart
+    const mainHeart = document.getElementById("mainHeart");
+    mainHeart.style.transform = "scale(1.2)";
+    setTimeout(() => { mainHeart.style.transform = "scale(1)"; }, 100);
+}
+
+function bigExplosion(event) {
+    // 1. Check if there is love to explode
+    if (loveScore === 0) {
+        alert("Tap the heart to increase the Love Level first! ❤️");
+        return;
+    }
+
+    // 2. Start explosion from the center of the screen
+    const x = window.innerWidth / 2;
+    const y = window.innerHeight / 2;
+
+    // 3. Create pieces equal to the loveScore
+    for (let i = 0; i < loveScore; i++) {
+        createParticle(x, y);
+    }
+    
+    // 4. THE RESTART LOGIC: Reset everything to 0
+    loveScore = 0; // Resets the internal math counter
+    document.getElementById("loveCount").innerText = "Love Level: 0"; // Resets the screen text
+}
+
+let flowersPlanted = 0;
+let butterflyCreated = false;
+
+function plantFlower(e) {
+    flowersPlanted++;
+    const canvas = document.getElementById("gardenCanvas");
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Create a flower
+    const flower = document.createElement("div");
+    const types = ['🌻', '🌷', '🌹', '🌼', '🌸'];
+    flower.innerText = types[Math.floor(Math.random() * types.length)];
+    flower.style.position = "absolute";
+    flower.style.left = (x - 10) + "px";
+    flower.style.top = (y - 10) + "px";
+    flower.style.fontSize = "20px";
+    flower.style.transition = "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+    flower.style.transform = "scale(0)";
+    
+    canvas.appendChild(flower);
+    setTimeout(() => flower.style.transform = "scale(1)", 10);
+    
+    document.getElementById("flowerCount").innerText = flowersPlanted;
+    document.getElementById("gardenHint").style.display = "none";
+
+    // Summon Butterfly at 10 flowers
+    if (flowersPlanted >= 10 && !butterflyCreated) {
+        summonButterfly();
+    }
+}
+
+function summonButterfly() {
+    butterflyCreated = true;
+    const bf = document.createElement("div");
+    bf.id = "magicButterfly";
+    bf.innerText = "🦋";
+    bf.style.position = "fixed"; 
+    bf.style.fontSize = "40px";
+    bf.style.transition = "all 0.6s ease-out"; 
+    bf.style.zIndex = "10000"; 
+    bf.style.pointerEvents = "none"; 
+    document.body.appendChild(bf);
+
+    document.getElementById("gardenStatus").innerHTML = "<b>The Golden Butterfly is now following you! ✨</b>";
+
+    // Global listener: Butterfly now follows the touch/mouse on the ENTIRE screen
+    window.onmousemove = (e) => {
+        bf.style.left = (e.clientX - 20) + "px";
+        bf.style.top = (e.clientY - 20) + "px";
+    };
+    
+    // Support for Mobile Touch
+    window.ontouchmove = (e) => {
+        bf.style.left = (e.touches[0].clientX - 20) + "px";
+        bf.style.top = (e.touches[0].clientY - 20) + "px";
+    };
+}
+
+function resetGarden() {
+    flowersPlanted = 0;
+    butterflyCreated = false;
+    
+    // Clear the flowers in the box
+    const canvas = document.getElementById("gardenCanvas");
+    canvas.innerHTML = '<p id="gardenHint" style="margin-top: 60px; font-size: 13px; color: #2e8b57;">Tap inside to plant flowers! 🌷</p>';
+    
+    // Remove the global butterfly if it exists
+    const oldBf = document.getElementById("magicButterfly");
+    if(oldBf) oldBf.remove();
+    
+    // Stop the following logic
+    window.onmousemove = null;
+    window.ontouchmove = null;
+    
+    document.getElementById("gardenStatus").innerHTML = 'Flowers planted: <span id="flowerCount">0</span>/10 to summon the Butterfly';
+}
+
+let shakeAmount = 0;
+let lastX, lastY;
+
+document.getElementById('oceanArea').onmousemove = function(e) {
+    if (shakeAmount >= 100) return;
+
+    if (lastX && lastY) {
+        // Calculate how much the mouse moved
+        let deltaX = Math.abs(e.clientX - lastX);
+        let deltaY = Math.abs(e.clientY - lastY);
+        let movement = deltaX + deltaY;
+
+        if (movement > 20) { // Only count fast movements
+            shakeAmount += 1.5;
+            updateBottle();
+        }
+    }
+    lastX = e.clientX;
+    lastY = e.clientY;
+};
+
+// Also support mobile touch "shaking"
+document.getElementById('oceanArea').ontouchmove = function(e) {
+    shakeAmount += 2;
+    updateBottle();
+};
+
+function updateBottle() {
+    let bottle = document.getElementById('magicBottle');
+    let bar = document.getElementById('shakeBar');
+    
+    // Make bottle vibrate
+    let tilt = (Math.random() - 0.5) * 20;
+    bottle.style.transform = `rotate(${tilt}deg)`;
+    
+    // Update progress bar
+    bar.style.width = shakeAmount + "%";
+
+    if (shakeAmount >= 100) {
+        openBottle();
+    }
+}
+
+function openBottle() {
+    document.getElementById('magicBottle').style.display = 'none';
+    document.getElementById('hiddenMessage').style.display = 'block';
+    document.getElementById('shakeStatus').innerText = "Message Received! ❤️";
+    document.getElementById('shakeStatus').style.color = "#ffeb3b";
+}
+
+function resetBottle() {
+    shakeAmount = 0;
+    document.getElementById('shakeBar').style.width = "0%";
+    document.getElementById('magicBottle').style.display = 'block';
+    document.getElementById('hiddenMessage').style.display = 'none';
+    document.getElementById('shakeStatus').innerText = "Shake the bottle to open it!";
+    document.getElementById('shakeStatus').style.color = "#fff";
+}
+
+// --- BOTTLE TREASURE LOGIC ---
+const birthdayMessages = [
+    "Mamta, you are the most precious treasure I've ever found! 💎",
+    "Wishing you a day as bright as your beautiful smile! ✨",
+    "May all your dreams come true this year, Mamta! 🌙",
+    "You make every day feel like a celebration! 🎊",
+    "To the girl with a heart of gold... Happy Birthday! 💛",
+    "Every year with you is a new adventure! 🗺️",
+    "You are my favorite reason to smile. 😊",
+    "Sending you a bottle full of love and warm hugs! 🫂",
+    "May your birthday be filled with infinite happiness! ♾️",
+    "You deserve all the cake and love in the world today! 🎂",
+    "Like a message in a bottle, you are rare and special. 📜",
+    "Keep shining like the star you are, Mamta! ⭐",
+    "I'm so lucky to have you in my life! 🍀",
+    "To many more years of laughter and joy together! 🥂",
+    "You look more beautiful with every passing year! 🌹",
+    "Wishing you health, wealth, and endless love! 💖",
+    "May this year be your best one yet! 🚀",
+    "You are my sunshine on a rainy day! ☀️",
+    "Happy Birthday to my one and only treasure! 💍",
+    "Let's make today unforgettable together! 🎆"
+];
+
+// Shake by Moving Mouse/Finger
+document.getElementById('oceanArea').addEventListener('mousemove', (e) => {
+    if (shakeAmount >= 100) return;
+    let movement = Math.abs(e.movementX) + Math.abs(e.movementY);
+    if (movement > 3) { 
+        shakeAmount += 1.5; 
+        updateBottleDisplay();
+    }
+});
+
+// Shake by Touch (Mobile Swipe)
+document.getElementById('oceanArea').addEventListener('touchmove', (e) => {
+    if (shakeAmount >= 100) return;
+    shakeAmount += 2;
+    updateBottleDisplay();
+});
+
+// Shake by Clicking
+document.getElementById('magicBottle').onclick = function() {
+    if (shakeAmount >= 100) return;
+    shakeAmount += 10;
+    updateBottleDisplay();
+};
+
+function updateBottleDisplay() {
+    let bottle = document.getElementById('magicBottle');
+    let bar = document.getElementById('shakeBar');
+    let tilt = (Math.random() - 0.5) * 40;
+    bottle.style.transform = `rotate(${tilt}deg) scale(1.1)`;
+    bar.style.width = Math.min(shakeAmount, 100) + "%";
+
+    if (shakeAmount >= 100) {
+        openBottle();
+    }
+}
+
+function openBottle() {
+    // THIS PART MAKES IT RANDOM EVERY TIME
+    const randomIndex = Math.floor(Math.random() * birthdayMessages.length);
+    document.getElementById('randomScrollText').innerText = birthdayMessages[randomIndex];
+    
+    document.getElementById('magicBottle').style.display = 'none';
+    document.getElementById('hiddenMessage').style.display = 'block';
+}
+
+function resetBottle() {
+    shakeAmount = 0;
+    document.getElementById('shakeBar').style.width = "0%";
+    document.getElementById('magicBottle').style.display = 'block';
+    document.getElementById('magicBottle').style.transform = 'rotate(0deg)';
+    document.getElementById('hiddenMessage').style.display = 'none';
+}
+
+function resetFromImage() {
+    // 1. Hide the full screen image
+    const overlay = document.getElementById("fullScreenOverlay");
+    overlay.style.display = "none";
+    document.body.style.overflow = "auto";
+
+    // 2. Reset the quiz and meter (Calling your existing reset function)
+    resetQuizGame();
+}
+
+function resetFromImage() {
+    // 1. Hide the black overlay
+    const overlay = document.getElementById("fullScreenOverlay");
+    overlay.style.display = "none";
+    document.body.style.overflow = "auto";
+
+    // 2. Reset the Quiz and the Meter
+    resetQuizGame(); // This sets meter to 0 and clears flowers
+}
+
+// Standard Fisher-Yates Shuffle Algorithm
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+
+let bgPartyInterval = null;
+
+function toggleBgParty(start) {
+    const startBtn = document.getElementById('startColorBtn');
+    const stopBtn = document.getElementById('stopColorBtn');
+
+    if (start) {
+        startBtn.style.display = 'none';
+        stopBtn.style.display = 'inline-block';
+
+        bgPartyInterval = setInterval(() => {
+            const hue = Math.floor(Math.random() * 360);
+            const pastelColor = `hsl(${hue}, 70%, 85%)`; 
+            document.body.style.setProperty('background', pastelColor, 'important');
+            document.body.style.setProperty('background-color', pastelColor, 'important');
+        }, 800); 
+    } else {
+        if(bgPartyInterval) clearInterval(bgPartyInterval);
+        startBtn.style.display = 'inline-block';
+        stopBtn.style.display = 'none';
+        document.body.style.background = "#ffb6c1";
+        document.body.style.backgroundColor = "#ffb6c1";
+    }
+}
+
+
+</script>
+
+<!-- IMAGE POPUP -->
+<div id="imgPopup" onclick="closePopup()">
+  <span class="close">&times;</span>
+  <img id="popupImg">
+</div>
+
+</body>
+</html>
