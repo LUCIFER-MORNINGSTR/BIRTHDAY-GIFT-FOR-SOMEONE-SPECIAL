@@ -619,9 +619,19 @@ z-index:999;
 
 <div class="game">
   <h3>🔐 SECRET NOTE</h3>
-  <h5>This Note Will Show Only After The Scoreing 5 in Catch the Heat Game.</h5>
+      <h5>This Note Will Show Only After The Scoreing 10 in Catch the Heat Game.</h5>
+  <!-- Score always visible -->
+  <p style="font-weight:bold;">🎯 Score: <span id="secretScore">0</span></p>
+
+  <!-- Button (hidden until score = 2) -->
+  <button id="revealBtn" class="magic-btn" style="display:none;" onclick="revealSecret()">
+    Reveal Secret 💌
+  </button>
+
+  <!-- Hidden message -->
   <p class="hidden-msg" id="hiddenMsg"></p>
 </div>
+
 
 <div class="game">
 <h3>💌 Compliment</h3>
@@ -723,6 +733,7 @@ z-index:999;
 
 <script>
 let startTime,score=0,gamesPlayed=0,quizIndex=0;
+let secretOpened = false; // 🔐 lock
 let page2ScrollY = 0;
 
 
@@ -987,58 +998,59 @@ setTimeout(()=>heart.remove(),3000);
 
 document.querySelectorAll('.game')[1].querySelector('button').innerText = 'Start';
 
-// function checkUnlock() {
-//     const msgBox = document.getElementById('hiddenMsg');
-//     const instructionNote = msgBox.parentElement.querySelector('h5');
-
-//     if (score >= 5) {
-//         if (instructionNote) instructionNote.style.display = 'none';
-        
-//         msgBox.style.display = 'block';
-//         msgBox.innerHTML = `
-//         <div style="text-align:center;">
-//             <span style="font-size:18px;">🎉 Score: ${score}!</span><br>
-//             <p style="color:#8B0000; margin-top:10px;">
-//                 Happy Birthday 🌹
-//                 On your special day, I want you to know how deeply grateful I am for everything you have done. The support and care you showed my family during difficult times came from a truly kind heart, and it will never be forgotten.
-//                 Some people help without expecting anything in return, and you are one of those rare people. Your presence brought comfort and strength when we needed it the most. I sincerely pray that life gives you back all the happiness, love, and peace that you have given to others.
-//                 Wishing you a beautiful year ahead and a life full of blessings.💝💝
-//             </p>
-//         </div>`;
-//     } else {
-//         msgBox.style.display = 'none';
-//         if (instructionNote) instructionNote.style.display = 'block';
-//     }
-// }
 function checkUnlock() {
-    const msgBox = document.getElementById('hiddenMsg');
-    const instructionNote = msgBox.parentElement.querySelector('h5');
-    
-    if (score >= 5) {
-        if (instructionNote) instructionNote.style.display = 'none';
-        msgBox.style.display = 'block';
-        msgBox.innerHTML = `
-            <div style="text-align:center;">
-                <span style="font-size:18px;">🎉 Score: ${score}!</span><br>
-                <p style="color:#8B0000; margin-top:10px;">
-                    Happy Birthday 🌹 On your special day, I want you to know how deeply grateful I am for everything you have done. The support and care you showed my family during difficult times came from a truly kind heart, and it will never be forgotten.
-                     Some people help without expecting anything in return, and you are one of those rare people. Your presence brought comfort and strength when we needed it the most. I sincerely pray that life gives you back all the happiness, love, and peace that you have given to others.
-                     Wishing you a beautiful year ahead and a life full of blessings.💝💝
-                </p>
-                <button class="close-note-btn" onclick="closeSecretNote()">Close Note 🔒</button>
-            </div>`;
-    } else {
-        msgBox.style.display = 'none';
-        if (instructionNote) instructionNote.style.display = 'block';
+    document.getElementById('secretScore').innerText = score;
+
+    const revealBtn = document.getElementById('revealBtn');
+
+    // Show button ONLY if not already opened
+    if (score >= 10 && !secretOpened) {
+        revealBtn.style.display = 'inline-block';
     }
 }
 
-function closeSecretNote() {
+function revealSecret() {
     const msgBox = document.getElementById('hiddenMsg');
-    const instructionNote = msgBox.parentElement.querySelector('h5');
-    msgBox.style.display = 'none';
-    if (instructionNote) instructionNote.style.display = 'block';
+    const revealBtn = document.getElementById('revealBtn');
+
+    secretOpened = true;      // 🔒 lock opened
+    revealBtn.style.display = 'none';
+
+    msgBox.style.display = 'block';
+    msgBox.scrollTop = 0;
+
+    msgBox.innerHTML = `
+      <p style="color:#8B0000; margin-top:10px;">
+        Happy Birthday 🌹<br><br>
+        On your special day, I want you to know how deeply grateful I am for everything you have done.
+        The support and care you showed my family during difficult times will never be forgotten.
+        I pray life returns all the love and kindness you give. 💝
+      </p>
+
+      <div style="text-align:center; margin-top:15px;">
+        <button onclick="closeSecret()" 
+          style="font-size:12px;padding:4px 14px;border:none;border-radius:14px;
+          background:#ff4f81;color:white;cursor:pointer;">
+          Close 🔒
+        </button>
+      </div>
+    `;
 }
+
+function closeSecret() {
+    const msgBox = document.getElementById('hiddenMsg');
+
+    msgBox.style.display = 'none';
+    msgBox.scrollTop = 0;
+
+    // Reset game requirement
+    score = 0;
+    document.getElementById('score').innerText = 'Score: 0';
+    document.getElementById('secretScore').innerText = '0';
+
+    secretOpened = false; // user must play again
+}
+
 
 
 function setMood(i){
