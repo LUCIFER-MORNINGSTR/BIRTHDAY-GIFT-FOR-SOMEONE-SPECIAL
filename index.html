@@ -619,7 +619,7 @@ z-index:999;
 
 <div class="game">
   <h3>🔐 SECRET NOTE</h3>
-      <h5>This Note Will Show Only After The Scoreing 10 in Catch the Heat Game.</h5>
+      <h5>This Note Will Show Only After The Scoring 10 in 'Catch the Heats' Game.</h5>
   <!-- Score always visible -->
   <p style="font-weight:bold;">🎯 Score: <span id="secretScore">0</span></p>
 
@@ -1625,6 +1625,8 @@ function openBottle() {
     document.getElementById('hiddenMessage').style.display = 'block';
     document.getElementById('shakeStatus').innerText = "Message Received! ❤️";
     document.getElementById('shakeStatus').style.color = "#ffeb3b";
+    shakeAmount = 100;
+
 }
 
 
@@ -1763,31 +1765,103 @@ function toggleBgParty(start) {
 let bottleProgress = 0;
 let bottleBroken = false;
 
-function handleBottleAction() {
-    if (bottleBroken) return;
+// function handleBottleAction() {
+//     if (bottleBroken) return;
 
-    const bar = document.getElementById('shakeBar');
-    const bottle = document.getElementById('magicBottle');
+//     const bar = document.getElementById('shakeBar');
+//     const bottle = document.getElementById('magicBottle');
     
-    // SLOWER PROGRESS: increase by only 1.5 per rub/tap
-    bottleProgress += 1.5; 
-    bar.style.width = Math.min(bottleProgress, 100) + '%';
+//     // SLOWER PROGRESS: increase by only 1.5 per rub/tap
+//     bottleProgress += 1.5; 
+//     bar.style.width = Math.min(bottleProgress, 100) + '%';
     
-    // Shake effect
-    bottle.style.transform = `rotate(${Math.random() * 20 - 10}deg) scale(1.1)`;
+//     // Shake effect
+//     bottle.style.transform = `rotate(${Math.random() * 20 - 10}deg) scale(1.1)`;
 
-    if (bottleProgress >= 100) {
-        bottleBroken = true;
-        bottle.innerText = '💥'; // Breaks first
-        bottle.style.animation = 'prize-grow 0.5s forwards';
+//     if (bottleProgress >= 100) {
+//         bottleBroken = true;
+//         bottle.innerText = '💥'; // Breaks first
+//         bottle.style.animation = 'prize-grow 0.5s forwards';
         
-        setTimeout(() => {
-            bottle.style.display = 'none';
-            document.getElementById('hiddenMessage').style.display = 'block';
-            document.getElementById('randomScrollText').innerText = "YOUR MESSAGE AFTER BREAKING THE BOTTLE 📜✨";
-        }, 800);
+//         setTimeout(() => {
+//             bottle.style.display = 'none';
+//             document.getElementById('hiddenMessage').style.display = 'block';
+//             document.getElementById('randomScrollText').innerText = "YOUR MESSAGE AFTER BREAKING THE BOTTLE 📜✨";
+//         }, 800);
+//     }
+// }
+
+// --- BOTTLE GAME LOGIC ---
+let bottleShakeProgress = 0;
+let isBottleOpen = false;
+
+// FIND AND REPLACE YOUR BOTTLE INTERACTION CODE WITH THIS:
+function handleBottleAction() {
+    if (isBottleOpen) return;
+
+    // Increase progress slowly (Requires about 6-10 taps/rubs to open)
+    bottleShakeProgress += 12; 
+    
+    const bottle = document.getElementById('magicBottle');
+    const bar = document.getElementById('shakeBar');
+    const status = document.getElementById('shakeStatus');
+
+    // Visual feedback: Shake the bottle more as progress increases
+    bottle.style.transform = `rotate(${Math.sin(Date.now()) * (bottleShakeProgress/5)}deg) scale(${1 + bottleShakeProgress/500})`;
+    bar.style.width = Math.min(bottleShakeProgress, 100) + "%";
+
+    if (bottleShakeProgress >= 100) {
+        explodeBottle();
+    } else {
+        status.innerText = "Keep going! Almost there... ✨";
     }
 }
+
+function explodeBottle() {
+    isBottleOpen = true;
+    const bottle = document.getElementById('magicBottle');
+    const msg = document.getElementById('hiddenMessage');
+    const scrollText = document.getElementById('randomScrollText');
+
+    // Explosion Effect
+    bottle.innerText = "💥";
+    
+    const bottleMessages = [
+        "A sea of luck is coming your way! 🌊",
+        "You are the pearl of this ocean, Mamta! 💎",
+        "May your dreams sail to beautiful shores! ⛵",
+        "Found a message: You are amazing! 📜",
+        "The waves whispered your name today! 🌸"
+    ];
+    
+    setTimeout(() => {
+        bottle.style.display = 'none';
+        scrollText.innerText = bottleMessages[Math.floor(Math.random() * bottleMessages.length)];
+        msg.style.display = 'block';
+        document.getElementById('shakeStatus').innerText = "You found a secret message! 💌";
+    }, 500);
+}
+
+// Ensure the listeners are set up for BOTH tap and rub (mouse/touch move)
+// const ocean = document.getElementById('oceanArea');
+ocean.addEventListener('mousedown', handleBottleAction);
+ocean.addEventListener('mousemove', (e) => { if(e.buttons === 1) handleBottleAction(); });
+ocean.addEventListener('touchstart', (e) => { e.preventDefault(); handleBottleAction(); });
+ocean.addEventListener('touchmove', (e) => { e.preventDefault(); handleBottleAction(); });
+
+function resetBottle() {
+    bottleShakeProgress = 0;
+    isBottleOpen = false;
+    shakeAmount = 0;  // 🔥 THIS WAS MISSING
+
+    document.getElementById('magicBottle').innerText = "🍾";
+    document.getElementById('magicBottle').style.display = 'block';
+    document.getElementById('magicBottle').style.transform = 'rotate(0deg) scale(1)';
+    document.getElementById('hiddenMessage').style.display = 'none';
+    document.getElementById('shakeBar').style.width = "0%";
+    document.getElementById('shakeStatus').innerText = "Rub the ocean or Tap the bottle! ✨";
+}
+
 
 // Apply to ocean area for rubbing (touch) and clicking (laptop)
 const ocean = document.getElementById('oceanArea');
@@ -1797,6 +1871,8 @@ ocean.onclick = handleBottleAction;
 function resetBottle() {
     bottleProgress = 0;
     bottleBroken = false;
+    shakeAmount = 0;  // 🔥 THIS WAS MISSING
+
     document.getElementById('shakeBar').style.width = '0%';
     document.getElementById('magicBottle').innerText = '🍾';
     document.getElementById('magicBottle').style.display = 'block';
@@ -1903,4 +1979,3 @@ function toggleFalling() {
 
 </body>
 </html>
-
