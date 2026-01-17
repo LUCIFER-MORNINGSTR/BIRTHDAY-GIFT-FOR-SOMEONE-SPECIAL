@@ -8,6 +8,20 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Segoe UI,sans-serif}
     
+.gif-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.gif-gallery img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 .box-shake {
     display: inline-block;
     animation: box-wiggle 0.5s infinite;
@@ -616,6 +630,32 @@ z-index:999;
 
 </div>
 </div>
+<div class="game" id="gifSection">
+  <h3>✨ MAMTA'S MOMENTS ✨</h3>
+  <div class="gif-gallery">
+    <img src="MINIBABU/mimibubu11.gif" alt="fun">
+    <img src="MINIBABU/mimibubu12.gif" alt="fun">
+    <img src="MINIBABU/mimibubu13.gif" alt="fun">
+    <img src="MINIBABU/mimibubu14.gif" alt="fun">
+    <img src="MINIBABU/mimibubu15.gif" alt="fun">
+    <img src="MINIBABU/mimibubu16.gif" alt="fun">
+    <img src="MINIBABU/mimibubu17.gif" alt="fun">
+    <img src="MINIBABU/mimibubu18.gif" alt="fun">
+    <img src="MINIBABU/mimibubu19.gif" alt="fun">
+    <img src="MINIBABU/mimibubu20.gif" alt="fun">
+    <img src="MINIBABU/mimibubu21.gif" alt="fun">
+    <img src="MINIBABU/mimibubu22.gif" alt="fun">
+    <img src="MINIBABU/mimibubu23.gif" alt="fun">
+    <img src="MINIBABU/mimibubu24.gif" alt="fun">
+    <img src="MINIBABU/mimibubu25.gif" alt="fun">
+    <img src="MINIBABU/mimibubu26.gif" alt="fun">
+    <img src="MINIBABU/mimibubu27.gif" alt="fun">
+    <img src="MINIBABU/mimibubu28.gif" alt="fun">
+    <img src="MINIBABU/mimibubu29.gif" alt="fun">
+    <img src="MINIBABU/mimibubu30.gif" alt="fun">
+
+    </div>
+</div>
 
 <div class="game">
   <h3>🔐 SECRET NOTE</h3>
@@ -649,11 +689,6 @@ z-index:999;
 <h3>🎆 Fireworks</h3>
 <button onclick="startFireworksWithText()">Celebrate 🎉</button>
 
-</div>
-
-<div class="game">
-<h3>💬 Birthday Wishes</h3>
-<p>May your life be filled with love & happiness 💖</p>
 </div>
 
 <div class="game">
@@ -1580,30 +1615,6 @@ function resetGarden() {
 let shakeAmount = 0;
 let lastX, lastY;
 
-document.getElementById('oceanArea').onmousemove = function(e) {
-    if (shakeAmount >= 100) return;
-
-    if (lastX && lastY) {
-        // Calculate how much the mouse moved
-        let deltaX = Math.abs(e.clientX - lastX);
-        let deltaY = Math.abs(e.clientY - lastY);
-        let movement = deltaX + deltaY;
-
-        if (movement > 20) { // Only count fast movements
-            shakeAmount += 1.5;
-            updateBottle();
-        }
-    }
-    lastX = e.clientX;
-    lastY = e.clientY;
-};
-
-// Also support mobile touch "shaking"
-document.getElementById('oceanArea').ontouchmove = function(e) {
-    shakeAmount += 2;
-    updateBottle();
-};
-
 function updateBottle() {
     let bottle = document.getElementById('magicBottle');
     let bar = document.getElementById('shakeBar');
@@ -1652,24 +1663,6 @@ const birthdayMessages = [
     "Let's make today unforgettable together! 🎆"
 ];
 
-// Shake by Moving Mouse/Finger
-document.getElementById('oceanArea').addEventListener('mousemove', (e) => {
-    if (shakeAmount >= 100) return;
-    let movement = Math.abs(e.movementX) + Math.abs(e.movementY);
-    if (movement > 3) { 
-        shakeAmount += 1.5; 
-        updateBottleDisplay();
-    }
-});
-
-// Shake by Touch (Mobile Swipe)
-document.getElementById('oceanArea').addEventListener('touchmove', (e) => {
-    if (shakeAmount >= 100) return;
-    shakeAmount += 2;
-    updateBottleDisplay();
-});
-
-// Shake by Clicking
 document.getElementById('magicBottle').onclick = function() {
     if (shakeAmount >= 100) return;
     shakeAmount += 10;
@@ -1688,14 +1681,19 @@ function updateBottleDisplay() {
     }
 }
 
+let shuffledMessages = [...birthdayMessages].sort(() => Math.random() - 0.5);
+let msgIndex = 0;
+
 function openBottle() {
-    // THIS PART MAKES IT RANDOM EVERY TIME
-    const randomIndex = Math.floor(Math.random() * birthdayMessages.length);
-    document.getElementById('randomScrollText').innerText = birthdayMessages[randomIndex];
-    
+    document.getElementById('randomScrollText').innerText =
+        shuffledMessages[msgIndex];
+
+    msgIndex = (msgIndex + 1) % shuffledMessages.length;
+
     document.getElementById('magicBottle').style.display = 'none';
     document.getElementById('hiddenMessage').style.display = 'block';
 }
+
 
 function resetBottle() {
     shakeAmount = 0;
@@ -1770,7 +1768,7 @@ function handleBottleAction() {
     const bottle = document.getElementById('magicBottle');
     
     // SLOWER PROGRESS: increase by only 1.5 per rub/tap
-    bottleProgress += 1.5; 
+    bottleProgress += 0.7; 
     bar.style.width = Math.min(bottleProgress, 100) + '%';
     
     // Shake effect
@@ -1784,15 +1782,21 @@ function handleBottleAction() {
         setTimeout(() => {
             bottle.style.display = 'none';
             document.getElementById('hiddenMessage').style.display = 'block';
-            document.getElementById('randomScrollText').innerText = "YOUR MESSAGE AFTER BREAKING THE BOTTLE 📜✨";
+            document.getElementById('randomScrollText').innerText = birthdayMessages[Math.floor(Math.random() * birthdayMessages.length)];
         }, 800);
     }
 }
+const bottle = document.getElementById('magicBottle');
 
-// Apply to ocean area for rubbing (touch) and clicking (laptop)
-const ocean = document.getElementById('oceanArea');
-ocean.addEventListener('touchmove', (e) => { e.preventDefault(); handleBottleAction(); });
-ocean.onclick = handleBottleAction;
+bottle.addEventListener('click', handleBottleAction);
+bottle.addEventListener('mousemove', handleBottleAction);
+
+/* 📱 Mobile: tap + rub */
+bottle.addEventListener('touchstart', handleBottleAction);
+bottle.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    handleBottleAction();
+});
 
 function resetBottle() {
     bottleProgress = 0;
