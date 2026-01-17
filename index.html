@@ -61,10 +61,9 @@
 
 .burst-heart {
     position: fixed;
-    font-size: 150px; /* Your new larger size */
+    font-size: 150px; 
     pointer-events: none;
     z-index: 9999;
-    /* ADD THIS LINE BELOW to center the heart on its starting point */
     transform: translate(-50%, -50%); 
     animation: burst 5s ease-out forwards;
 }
@@ -79,7 +78,6 @@
 }
 
 .shake-screen {
-  /* Increased duration and changed to 'ease-in-out' for smoothness */
   animation: shake 0.4s ease-in-out;
   animation-iteration-count: 3; 
 }
@@ -91,7 +89,7 @@
   animation: trophyPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Image popup */
+
 #imgPopup{
   position:fixed;
   inset:0;
@@ -226,6 +224,24 @@
     color: white;
     text-align: center;
     margin-top: 5px;
+}
+
+#stopFlowBtn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 10001; 
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #ff4f81;
+    color: #ff4f81;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none; /* Hidden by default */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -400,7 +416,7 @@ z-index:999;
 </head>
 
 <body>
-<!-- PAGE 3 : GIFT PAGE -->
+<button id="stopFlowBtn" onclick="toggleFalling()">Stop Falling ✨</button><!-- PAGE 3 : GIFT PAGE -->
 <div id="fullScreenOverlay" onclick="resetFromImage()">
     <img src="MAMTA/fulscreen.jpg" alt="Birthday Queen">
     <h1>HAPPY BIRTHDAY MAMTA! 🎂</h1>
@@ -440,6 +456,16 @@ z-index:999;
       <img src="GIFT/gift3.jpg" onclick="openPopup(this)">
       <img src="GIFT/gift4.jpg" onclick="openPopup(this)">
       <img src="GIFT/gift5.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift6.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift7.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift8.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift9.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift10.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift11.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift12.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift13.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift14.jpg" onclick="openPopup(this)">
+      <img src="GIFT/gift15.jpg" onclick="openPopup(this)">
 
     </div>
 
@@ -574,7 +600,12 @@ z-index:999;
 <div class="game">
   <h3>🔐 SECRET NOTE</h3>
   <h5>This Note Will Show Only After The Scoreing 5 in Catch the Heat Game.</h5>
-  <p class="hidden-msg" id="hiddenMsg">You are precious, loved & admired 💝</p>
+  <p class="hidden-msg" id="hiddenMsg">Happy Birthday 🌹
+On your special day, I want you to know how deeply grateful I am for everything you have done. The support and care you showed my family during difficult times came from a truly kind heart, and it will never be forgotten.
+
+Some people help without expecting anything in return, and you are one of those rare people. Your presence brought comfort and strength when we needed it the most. I sincerely pray that life gives you back all the happiness, love, and peace that you have given to others.
+
+Wishing you a beautiful year ahead and a life full of blessings.💝</p>
 </div>
 
 <div class="game">
@@ -916,32 +947,6 @@ function enterPage(){
 }
 
 
-let flowerInterval = 900; // Starting speed (ms)
-let flowerTimer;
-
-function floatLoop() {
-    if (flowerTimer) clearInterval(flowerTimer);
-
-    flowerTimer = setInterval(() => {
-        let e = document.createElement('div');
-        e.className = 'float';
-        const icons = ['💖', '🌸', '✨', '🎀', '🌷', '🌹'];
-        e.innerText = icons[Math.floor(Math.random() * icons.length)];
-        e.style.left = Math.random() * 100 + 'vw';
-        e.style.animationDuration = (4 + Math.random() * 4) + 's';
-        document.body.appendChild(e);
-        
-        // Cleanup to prevent phone lag
-        setTimeout(() => e.remove(), 8000);
-
-        if (flowerInterval > 120) { 
-            flowerInterval -= 5; 
-            floatLoop(); 
-        }
-    }, flowerInterval);
-}
-
-
 function startHeartGame(){
 score=0;
 document.getElementById('score').innerText='Score: 0';
@@ -1079,21 +1084,26 @@ function resetBlowGame() {
 }
 
 
-
 function openGiftPage() {
+    // SAVE the current position before leaving Page 2
     page2ScrollY = window.scrollY; 
-
+    
     document.getElementById('page2').classList.add('hidden');
     document.getElementById('page3').classList.remove('hidden');
+    document.getElementById('stopFlowBtn').style.display = 'block';
+    
+    // Start the NEW page from the top
+    window.scrollTo(0, 0); 
 }
 
 
-
 function backToGames() {
-    document.getElementById('page3').classList.add('hidden');
-    document.getElementById('page2').classList.remove('hidden');
-
-    window.scrollTo(0, page2ScrollY);
+    document.getElementById('page3').classList.add('hidden'); // Hide Gifts
+    document.getElementById('page2').classList.remove('hidden'); // Show Main Page
+    document.getElementById('stopFlowBtn').style.display = 'none';
+    
+    // Restore the scroll position
+    window.scrollTo(0, page2ScrollY); 
 }
 
 
@@ -1133,14 +1143,25 @@ function createFirework(sx, sy, tx, ty) {
 
 
 function openMemoriesPage() {
+    // SAVE the current position before leaving Page 2
+    page2ScrollY = window.scrollY; 
+    
     document.getElementById('page2').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
-    // window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('stopFlowBtn').style.display = 'block';
+    
+    // Start the NEW page from the top
+    window.scrollTo(0, 0); 
 }
 
+
 function backToGamesFromMemories() {
-    document.getElementById('page4').classList.add('hidden');
-    document.getElementById('page2').classList.remove('hidden'); 
+    document.getElementById('page4').classList.add('hidden'); // Hide Memories
+    document.getElementById('page2').classList.remove('hidden'); // Show Main Page
+    document.getElementById('stopFlowBtn').style.display = 'none';
+    
+    // Restore the scroll position
+    window.scrollTo(0, page2ScrollY);
 }
 
 function openPopup(img){
@@ -1275,7 +1296,6 @@ function resetQuizGame() {
     loadQuiz();
 }
 
-//upper added req...5
 
 // --- 1. TIME TRAVEL LOGIC ---
 const memories = [
@@ -1742,6 +1762,75 @@ function showStep(step) {
     if (step === 2) startMic();
     if (step === 3) { score = 0; updateScore(); gameActive = true; spawnHeart(); }
     if (step === 4) startFireworksWithText();
+}
+
+
+let isFallingEnabled = true;
+let flowerInterval = 900; 
+let flowerTimer;
+
+// Modified Enter Function
+function enterPage(){
+    document.getElementById('page1').classList.add('hidden');
+    document.getElementById('page2').classList.remove('hidden');
+    
+    // Show the stop button only on Page 2
+    document.getElementById('stopFlowBtn').style.display = 'block';
+    
+    music.play();
+    startTime = Date.now();
+    setInterval(() => {
+        document.getElementById('timer').innerText = `You’ve been smiling here for ${Math.floor((Date.now() - startTime) / 1000)} seconds ⏳`;
+    }, 1000);
+    
+    floatLoop(); 
+    loadQuiz();
+}
+
+// Updated Animation Loop
+function floatLoop() {
+    if (!isFallingEnabled) return; // Don't start if disabled
+
+    if (flowerTimer) clearInterval(flowerTimer);
+
+    flowerTimer = setInterval(() => {
+        if (!isFallingEnabled) {
+            clearInterval(flowerTimer);
+            return;
+        }
+        
+        let e = document.createElement('div');
+        e.className = 'float';
+        const icons = ['💖', '🌸', '✨', '🎀', '🌷', '🌹'];
+        e.innerText = icons[Math.floor(Math.random() * icons.length)];
+        e.style.left = Math.random() * 100 + 'vw';
+        e.style.animationDuration = (4 + Math.random() * 4) + 's';
+        document.body.appendChild(e);
+        
+        setTimeout(() => e.remove(), 8000);
+
+        if (flowerInterval > 120) { 
+            flowerInterval -= 5; 
+            floatLoop(); 
+        }
+    }, flowerInterval);
+}
+
+// Toggle Function
+function toggleFalling() {
+    const btn = document.getElementById('stopFlowBtn');
+    if (isFallingEnabled) {
+        isFallingEnabled = false;
+        clearInterval(flowerTimer);
+        // Remove any flowers currently on screen
+        document.querySelectorAll('.float, .flower-shower').forEach(el => el.remove());
+        btn.innerText = "Start Falling 🌹";
+    } else {
+        isFallingEnabled = true;
+        flowerInterval = 900; // Reset speed
+        floatLoop();
+        btn.innerText = "Stop Falling ✨";
+    }
 }
 
 
