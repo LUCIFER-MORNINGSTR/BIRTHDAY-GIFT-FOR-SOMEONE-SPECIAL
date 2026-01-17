@@ -357,6 +357,26 @@ cursor:pointer;
 margin-top:8px;
 }
 
+/* Styling for the Secret Note Close Button */
+.close-note-btn {
+    background: #ff4f81;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(255, 79, 129, 0.3);
+    transition: 0.3s;
+}
+
+.close-note-btn:hover {
+    background: #ff85a2;
+    transform: scale(1.05);
+}
+
 .cake {
   font-size: 70px;
   cursor: pointer;
@@ -967,30 +987,57 @@ setTimeout(()=>heart.remove(),3000);
 
 document.querySelectorAll('.game')[1].querySelector('button').innerText = 'Start';
 
+// function checkUnlock() {
+//     const msgBox = document.getElementById('hiddenMsg');
+//     const instructionNote = msgBox.parentElement.querySelector('h5');
+
+//     if (score >= 5) {
+//         if (instructionNote) instructionNote.style.display = 'none';
+        
+//         msgBox.style.display = 'block';
+//         msgBox.innerHTML = `
+//         <div style="text-align:center;">
+//             <span style="font-size:18px;">🎉 Score: ${score}!</span><br>
+//             <p style="color:#8B0000; margin-top:10px;">
+//                 Happy Birthday 🌹
+//                 On your special day, I want you to know how deeply grateful I am for everything you have done. The support and care you showed my family during difficult times came from a truly kind heart, and it will never be forgotten.
+//                 Some people help without expecting anything in return, and you are one of those rare people. Your presence brought comfort and strength when we needed it the most. I sincerely pray that life gives you back all the happiness, love, and peace that you have given to others.
+//                 Wishing you a beautiful year ahead and a life full of blessings.💝💝
+//             </p>
+//         </div>`;
+//     } else {
+//         msgBox.style.display = 'none';
+//         if (instructionNote) instructionNote.style.display = 'block';
+//     }
+// }
 function checkUnlock() {
     const msgBox = document.getElementById('hiddenMsg');
     const instructionNote = msgBox.parentElement.querySelector('h5');
-
+    
     if (score >= 5) {
         if (instructionNote) instructionNote.style.display = 'none';
-        
         msgBox.style.display = 'block';
         msgBox.innerHTML = `
-        <div style="text-align:center;">
-            <span style="font-size:18px;">🎉 Score: ${score}!</span><br>
-            <p style="color:#8B0000; margin-top:10px;">
-                Happy Birthday 🌹
-On your special day, I want you to know how deeply grateful I am for everything you have done. The support and care you showed my family during difficult times came from a truly kind heart, and it will never be forgotten.
-
-Some people help without expecting anything in return, and you are one of those rare people. Your presence brought comfort and strength when we needed it the most. I sincerely pray that life gives you back all the happiness, love, and peace that you have given to others.
-
-Wishing you a beautiful year ahead and a life full of blessings.💝💝
-            </p>
-        </div>`;
+            <div style="text-align:center;">
+                <span style="font-size:18px;">🎉 Score: ${score}!</span><br>
+                <p style="color:#8B0000; margin-top:10px;">
+                    Happy Birthday 🌹 On your special day, I want you to know how deeply grateful I am for everything you have done. The support and care you showed my family during difficult times came from a truly kind heart, and it will never be forgotten.
+                     Some people help without expecting anything in return, and you are one of those rare people. Your presence brought comfort and strength when we needed it the most. I sincerely pray that life gives you back all the happiness, love, and peace that you have given to others.
+                     Wishing you a beautiful year ahead and a life full of blessings.💝💝
+                </p>
+                <button class="close-note-btn" onclick="closeSecretNote()">Close Note 🔒</button>
+            </div>`;
     } else {
         msgBox.style.display = 'none';
         if (instructionNote) instructionNote.style.display = 'block';
     }
+}
+
+function closeSecretNote() {
+    const msgBox = document.getElementById('hiddenMsg');
+    const instructionNote = msgBox.parentElement.querySelector('h5');
+    msgBox.style.display = 'none';
+    if (instructionNote) instructionNote.style.display = 'block';
 }
 
 
