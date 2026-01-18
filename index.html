@@ -8,6 +8,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Segoe UI,sans-serif}
     
+
 .gif-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -258,6 +259,14 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+#fireworkCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;   /* higher than everything */
+  pointer-events: none;
+}
+
+
 body {
     margin: 0;
     min-height: 100vh;
@@ -445,6 +454,30 @@ z-index:999;
     to { transform: translateY(100vh) rotate(360deg); }
 }
 
+#fireworkText {
+  position: fixed;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(32px, 7vw, 80px);
+  font-weight: 900;
+  color: #b30000;
+  text-align: center;
+  z-index: 20001;
+  text-shadow:
+    0 0 15px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 100, 100, 0.9);
+  pointer-events: none;
+  animation: fadeText 6s ease-in-out forwards;
+}
+
+@keyframes fadeText {
+  0% { opacity: 0; transform: translate(-50%, -20px); }
+  20% { opacity: 1; transform: translate(-50%, 0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
 
 </style>
 </head>
@@ -508,7 +541,6 @@ z-index:999;
       <img src="GIFT/gift19.jpg" onclick="openPopup(this)">
       <img src="GIFT/gift20.jpg" onclick="openPopup(this)">
       <img src="GIFT/gift21.jpg" onclick="openPopup(this)">
-      <img src="GIFT/gift22.jpg" onclick="openPopup(this)">
       <img src="GIFT/gift22.jpg" onclick="openPopup(this)">
       <img src="GIFT/gift23.jpg" onclick="openPopup(this)">
       <img src="GIFT/gift24.jpg" onclick="openPopup(this)">
@@ -927,7 +959,48 @@ const quizData = [
     { q: "What would Mamta choose?", o: ["Mountains", "Beaches", "Cities", "Forests"], a: 0 },
     { q: "What is Mamta's signature hair style?", o: ["Open hair", "Ponytail", "Bun", "Braids"], a: 0 },
     { q: "How many selfies does Mamta take daily?", o: ["Zero", "5-10", "50+", "Infinite"], a: 2 },
-    { q: "Final Question: Is Mamta 100% Perfect?", o: ["Yes", "Absolutely", "Definitely", "All of the above"], a: 3 }
+    { q: "Final Question: Is Mamta 100% Perfect?", o: ["Yes", "Absolutely", "Definitely", "All of the above"], a: 3 },
+    { q: "What time of day suits Mamta the most?", o: ["Early Morning", "Afternoon", "Evening", "Late Night"], a: 3 },
+    { q: "Which quality shines most in Mamta?", o: ["Kindness", "Patience", "Confidence", "Humor"], a: 0 },
+    { q: "What kind of weather makes Mamta happiest?", o: ["Sunny", "Rainy", "Cloudy", "Cold"], a: 1 },
+    { q: "What does Mamta value most in people?", o: ["Money", "Honesty", "Looks", "Status"], a: 1 },
+    { q: "Which song type suits Mamta best?", o: ["Sad", "Romantic", "Lofi", "Party"], a: 2 },
+    { q: "What makes Mamta feel safe?", o: ["Silence", "Good company", "Music", "Sleep"], a: 1 },
+    { q: "Mamta is more attracted to?", o: ["Luxury", "Simplicity", "Fame", "Power"], a: 1 },
+    { q: "Which place would Mamta relax most?", o: ["Hilltop", "Temple", "Home", "Cafe"], a: 2 },
+    { q: "What kind of gifts does Mamta love?", o: ["Expensive", "Thoughtful", "Big", "Surprise"], a: 1 },
+    { q: "Mamta believes more in?", o: ["Luck", "Hard work", "Destiny", "Magic"], a: 2 },
+    { q: "What kind of smile suits Mamta?", o: ["Cute", "Soft", "Shy", "All of these"], a: 3 },
+    { q: "What calms Mamta instantly?", o: ["Food", "Sleep", "Music", "Talking"], a: 3 },
+    { q: "Mamta prefers conversations that are?", o: ["Deep", "Funny", "Short", "Random"], a: 0 },
+    { q: "Which color combo suits Mamta most?", o: ["Pink & White", "Black & Red", "Blue & Grey", "Green & Yellow"], a: 0 },
+    { q: "Mamta’s personality is closest to?", o: ["Soft Flower", "Warm Sunshine", "Calm Moon", "Bright Star"], a: 1 },
+    { q: "What does Mamta notice first?", o: ["Eyes", "Smile", "Voice", "Vibe"], a: 3 },
+    { q: "Mamta enjoys silence when?", o: ["Sad", "Happy", "Tired", "Thinking"], a: 2 },
+    { q: "What kind of friend is Mamta?", o: ["Listener", "Advisor", "Protector", "All"], a: 3 },
+    { q: "Mamta’s energy is mostly?", o: ["Calm", "Cheerful", "Soft", "Balanced"], a: 3 },
+    { q: "What makes Mamta emotional?", o: ["Memories", "Music", "Words", "All"], a: 3 },
+    { q: "Mamta prefers gifts that are?", o: ["Useful", "Pretty", "Emotional", "Trendy"], a: 2 },
+    { q: "What is Mamta naturally good at?", o: ["Understanding people", "Leading", "Teaching", "Convincing"], a: 0 },
+    { q: "Mamta feels happiest when she is?", o: ["Loved", "Appreciated", "Relaxed", "Smiling"], a: 1 },
+    { q: "Mamta’s comfort zone is?", o: ["People", "Music", "Home", "Memories"], a: 2 },
+    { q: "What does Mamta avoid most?", o: ["Drama", "Arguments", "Negativity", "Crowds"], a: 2 },
+    { q: "Mamta’s heart is mostly?", o: ["Soft", "Strong", "Pure", "Golden"], a: 3 },
+    { q: "Mamta shines brightest when she is?", o: ["Happy", "Calm", "Loved", "Confident"], a: 0 },
+    { q: "Mamta prefers plans that are?", o: ["Fixed", "Flexible", "Spontaneous", "Simple"], a: 1 },
+    { q: "Mamta connects fastest with?", o: ["Kind people", "Funny people", "Quiet people", "Honest people"], a: 3 },
+    { q: "Mamta’s vibe feels like?", o: ["Warm hug", "Soft breeze", "Gentle rain", "Moonlight"], a: 0 },
+    { q: "Mamta believes love should be?", o: ["Loud", "Deep", "Patient", "Pure"], a: 3 },
+    { q: "Mamta enjoys moments that are?", o: ["Peaceful", "Joyful", "Meaningful", "Silent"], a: 2 },
+    { q: "Mamta’s presence makes people feel?", o: ["Safe", "Happy", "Calm", "All"], a: 3 },
+    { q: "Mamta’s strength lies in her?", o: ["Heart", "Mind", "Smile", "Soul"], a: 3 },
+    { q: "Mamta’s kindness is?", o: ["Rare", "Natural", "Hidden", "Powerful"], a: 1 },
+    { q: "Mamta deserves?", o: ["Happiness", "Respect", "Love", "Everything"], a: 3 },
+    { q: "Mamta’s nature is more?", o: ["Gentle", "Warm", "Caring", "All"], a: 3 },
+    { q: "Mamta’s smile feels like?", o: ["Sunrise", "Comfort", "Magic", "Home"], a: 3 },
+    { q: "Mamta’s heart speaks in?", o: ["Actions", "Silence", "Care", "Love"], a: 3 },
+    { q: "Final Bonus: Mamta is?", o: ["Special", "Rare", "Precious", "All of these"], a: 3 }
+
 ];
 
 function loadQuiz() {
@@ -1343,6 +1416,8 @@ function startFireworksWithText() {
         count++;
         if (count > 20) clearInterval(interval);
     }, 300);
+    startCanvasFireworks();
+
 }
 
 function createFirework(sx, sy, tx, ty) {
@@ -1653,7 +1728,6 @@ function bigExplosion(event) {
         createParticle(x, y);
     }
     
-    // 4. THE RESTART LOGIC: Reset everything to 0
     loveScore = 0; // Resets the internal math counter
     document.getElementById("loveCount").innerText = "Love Level: 0"; // Resets the screen text
 }
@@ -1740,30 +1814,6 @@ function resetGarden() {
 let shakeAmount = 0;
 let lastX, lastY;
 
-// document.getElementById('oceanArea').onmousemove = function(e) {
-//     if (shakeAmount >= 100) return;
-
-//     if (lastX && lastY) {
-//         // Calculate how much the mouse moved
-//         let deltaX = Math.abs(e.clientX - lastX);
-//         let deltaY = Math.abs(e.clientY - lastY);
-//         let movement = deltaX + deltaY;
-
-//         if (movement > 20) { // Only count fast movements
-//             shakeAmount += 1.5;
-//             updateBottle();
-//         }
-//     }
-//     lastX = e.clientX;
-//     lastY = e.clientY;
-// };
-
-// Also support mobile touch "shaking"
-// document.getElementById('oceanArea').ontouchmove = function(e) {
-//     shakeAmount += 2;
-//     updateBottle();
-// };
-
 function updateBottle() {
     let bottle = document.getElementById('magicBottle');
     let bar = document.getElementById('shakeBar');
@@ -1812,22 +1862,6 @@ const birthdayMessages = [
     "Let's make today unforgettable together! 🎆"
 ];
 
-// Shake by Moving Mouse/Finger
-// document.getElementById('oceanArea').addEventListener('mousemove', (e) => {
-//     if (shakeAmount >= 100) return;
-//     let movement = Math.abs(e.movementX) + Math.abs(e.movementY);
-//     if (movement > 3) { 
-//         shakeAmount += 1.5; 
-//         updateBottleDisplay();
-//     }
-// });
-
-// Shake by Touch (Mobile Swipe)
-// document.getElementById('oceanArea').addEventListener('touchmove', (e) => {
-//     if (shakeAmount >= 100) return;
-//     shakeAmount += 2;
-//     updateBottleDisplay();
-// });
 
 // Shake by Clicking
 document.getElementById('magicBottle').onclick = function() {
@@ -1848,14 +1882,7 @@ function updateBottleDisplay() {
     }
 }
 
-// function openBottle() {
-//     // THIS PART MAKES IT RANDOM EVERY TIME
-//     const randomIndex = Math.floor(Math.random() * birthdayMessages.length);
-//     document.getElementById('randomScrollText').innerText = birthdayMessages[randomIndex];
-    
-//     document.getElementById('magicBottle').style.display = 'none';
-//     document.getElementById('hiddenMessage').style.display = 'block';
-// }
+
 let shuffledMessages = [...birthdayMessages].sort(() => Math.random() - 0.5);
 let msgIndex = 0;
 
@@ -1895,7 +1922,7 @@ function resetFromImage() {
     document.body.style.overflow = "auto";
 
     // 2. Reset the Quiz and the Meter
-    resetQuizGame(); // This sets meter to 0 and clears flowers
+    resetQuizGame(); 
 }
 
 // Standard Fisher-Yates Shuffle Algorithm
@@ -1974,10 +2001,6 @@ bottle.addEventListener('touchmove', (e) => {
     handleBottleAction();
 });
 
-// Apply to ocean area for rubbing (touch) and clicking (laptop)
-// const ocean = document.getElementById('oceanArea');
-// ocean.addEventListener('touchmove', (e) => { e.preventDefault(); handleBottleAction(); });
-// ocean.onclick = handleBottleAction;
 
 function resetBottle() {
     bottleProgress = 0;
@@ -2077,6 +2100,165 @@ function toggleFalling() {
     }
 }
 
+function startCanvasFireworks() {
+    // --- SHOW TEXT ---
+const oldText = document.getElementById('fireworkText');
+if (oldText) oldText.remove();
+
+const textDiv = document.createElement('div');
+textDiv.id = 'fireworkText';
+textDiv.innerText = 'HAPPY BIRTHDAY MAMTA';
+textDiv.style.top = '38%';
+textDiv.style.left = '50%';
+textDiv.style.transform = 'translate(-50%, -50%)';
+document.body.appendChild(textDiv);
+
+// auto remove text
+setTimeout(() => textDiv.remove(), 6000);
+
+
+    const old = document.getElementById('fireworkCanvas');
+    if (old) old.remove();
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'fireworkCanvas';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    let fireworks = [];
+    let particles = [];
+
+    class Firework {
+        constructor(x, y, tx, ty) {
+            this.x = x;
+            this.y = y;
+            this.tx = tx;
+            this.ty = ty;
+            this.speed = 4;
+            this.acc = 1.05;
+            this.angle = Math.atan2(ty - y, tx - x);
+        }
+        update(i) {
+            this.speed *= this.acc;
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed;
+            if (Math.hypot(this.tx - this.x, this.ty - this.y) < 10) {
+                explode(this.tx, this.ty);
+                fireworks.splice(i, 1);
+            }
+        }
+        draw() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(this.x, this.y, 2, 2);
+        }
+    }
+
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.angle = Math.random() * Math.PI * 2;
+            this.speed = Math.random() * 5 + 2;
+            this.alpha = 1;
+            this.decay = Math.random() * 0.01 + 0.004;
+            this.color = `hsl(${Math.random() * 360},100%,60%)`;
+        }
+        update(i) {
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + 0.6;
+            this.alpha -= this.decay;
+            if (this.alpha <= 0) particles.splice(i, 1);
+        }
+        draw() {
+            ctx.fillStyle = this.color.replace(')', `,${this.alpha})`).replace('hsl','hsla');
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    
+    function explode(x, y) {
+    for (let i = 0; i < 60; i++) {
+        const spreadX = x + (Math.random() - 0.5) * 120;
+        const spreadY = y + (Math.random() - 0.5) * 120;
+        particles.push(new Particle(spreadX, spreadY));
+    }
+}
+
+
+    function animate() {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0,0,0,0.2)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalCompositeOperation = 'lighter';
+
+        fireworks.forEach((f, i) => { f.update(i); f.draw(); });
+        particles.forEach((p, i) => { p.update(i); p.draw(); });
+
+        requestAnimationFrame(animate);
+    }
+
+    // text fireworks
+    const text = "HAPPY BIRTHDAY MAMTA";
+    ctx.font = "bold 80px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let points = [];
+    for (let y = 0; y < canvas.height; y += 8) {
+        for (let x = 0; x < canvas.width; x += 8) {
+            if (data.data[(y * canvas.width + x) * 4 + 3] > 150) {
+                points.push({ x, y });
+            }
+        }
+    }
+
+    // FULL SCREEN RANDOM PARTICLE BLASTS
+    const screenBlasts = setInterval(() => {
+        explode(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height
+        );
+    }, 200);
+
+// stop safely (mobile-friendly)
+setTimeout(() => clearInterval(screenBlasts), 20000);
+
+
+    let i = 0;
+    const launch = setInterval(() => {
+        for (let j = 0; j < 6 && i < points.length; j++, i++) {
+            fireworks.push(
+                new Firework(canvas.width / 2, canvas.height, points[i].x, points[i].y)
+            );
+        }
+        if (i >= points.length) clearInterval(launch);
+    }, 40);
+
+    animate();
+
+    // auto cleanup (important for phone)
+    setTimeout(() => {
+    canvas.style.transition = 'opacity 2.5s ease';
+    canvas.style.opacity = '0';
+
+    setTimeout(() => canvas.remove(), 2500);
+}, 12000);
+
+
+}
 
 </script>
 
@@ -2088,5 +2270,4 @@ function toggleFalling() {
 
 </body>
 </html>
-
 
