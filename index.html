@@ -483,7 +483,7 @@ z-index:999;
 </head>
 
 <body>
-<button id="stopFlowBtn" onclick="toggleFalling()">Stop Falling ✨</button><!-- PAGE 3 : GIFT PAGE -->
+<button id="stopFlowBtn" onclick="toggleFalling()">Stop🥀</button><!-- PAGE 3 : GIFT PAGE -->
 <div id="fullScreenOverlay" onclick="resetFromImage()">
     <img src="MAMTA/fulscreen.jpg" alt="Birthday Queen">
     <h1>HAPPY BIRTHDAY MAMTA! 🎂</h1>
@@ -2091,12 +2091,12 @@ function toggleFalling() {
         clearInterval(flowerTimer);
         // Remove any flowers currently on screen
         document.querySelectorAll('.float, .flower-shower').forEach(el => el.remove());
-        btn.innerText = "Start Falling 🌹";
+        btn.innerText = "Start🌹";
     } else {
         isFallingEnabled = true;
         flowerInterval = 900; // Reset speed
         floatLoop();
-        btn.innerText = "Stop Falling ✨";
+        btn.innerText = "Stop🥀";
     }
 }
 
